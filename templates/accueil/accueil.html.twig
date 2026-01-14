@@ -1,47 +1,47 @@
-{% extends 'base.html.twig' %}
-
-{% block title %}Accueil - 3wolfdesign{% endblock %}
-{% block stylesheets %}
-    {{ parent() }}
-    <link rel="stylesheet" href="{{ asset('styles/accueil.css') }}">
-{% endblock %}
-
-{% block body %}
-
-<!-- PANEL GAUCHE -->
-<div class="side-panel panel-left">
-    <div class="panel-icon"><img src="{{ asset('img/freyja-logo.png') }}" alt="Logo Sur-Mesure"></div>
-    <div class="panel-title">Sur Mesure</div>
-    <div class="panel-description">
-        Découvrez nos kits d'aéromodèles prêts à assembler pour passionnés d'aviation et de modélisme
-    </div>
-</div>
-
-<!-- PANEL DROIT -->
-<div class="side-panel panel-right">
-    <div class="panel-icon"><img src="{{ asset('img/louveto-logo.png') }}" alt="Logo Catalogue"></div>
-    <div class="panel-title">Catalogue</div>
-    <div class="panel-description">
-        Services d'impression 3D sur mesure pour vos projets personnalisés et professionnels
-    </div>
-</div>
-
-<!-- CENTRE -->
-<div class="main-wrapper">
-    <div class="container">
-
-        <div class="flame-container">
-            <div class="flame-layer flame-1"></div>
-            <div class="flame-layer flame-2"></div>
-            <div class="flame-layer flame-3"></div>
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Accueil - 3wolfdesign</title>
+        <link rel="icon" href="{{ asset('img/logo.ico') }}">
+        <link rel="stylesheet" href="{{ asset('styles/accueil.css') }}">
+    </head>
+    <body>
+        <!-- PANEL GAUCHE -->
+        <div class="side-panel panel-left">
+            <div class="panel-icon"><img src="{{ asset('img/freyja-logo.png') }}" alt="Logo Sur-Mesure"></div>
+            <div class="panel-title">Sur Mesure</div>
+            <div class="panel-description">
+                Découvrez nos kits d'aéromodèles prêts à assembler pour passionnés d'aviation et de modélisme
+            </div>
         </div>
 
-        <svg class="hex-svg" viewBox="0 0 300 300">
-            <polygon class="hex-path"
-                points="150,20 262.6,85 262.6,215 150,280 37.4,215 37.4,85"/>
-        </svg>
+        <!-- PANEL DROIT -->
+        <div class="side-panel panel-right">
+            <div class="panel-icon"><img src="{{ asset('img/louveto-logo.png') }}" alt="Logo Catalogue"></div>
+            <div class="panel-title">Catalogue</div>
+            <div class="panel-description">
+                Services d'impression 3D sur mesure pour vos projets personnalisés et professionnels
+            </div>
+        </div>
 
-        <img src="{{ asset('img/3wolfdesign-logo.png') }}" class="logo" alt="3WolfDesign">
-    </div>
-</div>
-{% endblock %}
+        <!-- CENTRE -->
+        <div class="main-wrapper">
+            <div class="container">
+
+                <div class="flame-container">
+                    <div class="flame-layer flame-1"></div>
+                    <div class="flame-layer flame-2"></div>
+                    <div class="flame-layer flame-3"></div>
+                </div>
+
+                <svg class="hex-svg" viewBox="0 0 300 300">
+                    <polygon class="hex-path"
+                        points="150,20 262.6,85 262.6,215 150,280 37.4,215 37.4,85"/>
+                </svg>
+
+                <img src="{{ asset('img/3wolfdesign-logo.png') }}" class="logo" alt="3WolfDesign">
+            </div>
+        </div>
+    </body> 
+</html>
