@@ -1,0 +1,119 @@
+.about-container {
+    max-width: 1200px;
+    margin: 50px auto;
+    padding: 0 20px;
+}
+
+.page-title {
+    font-weight: 400;
+    font-size: 48px;
+    text-align: center;
+    margin-bottom: 50px;
+    color: #000;
+}
+
+/* ---------- SECTION HISTOIRE (PLEINE LARGEUR) ---------- */
+.history-card {
+    width: 100%;
+    background: #fff;
+    border: 1px solid #eee;
+    border-radius: 12px;
+    padding: 50px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+    margin-bottom: 30px; /* Espace avant les cartes du bas */
+}
+
+.card-main-title {
+    font-family: "mostra-nuova", sans-serif;
+    font-size: 32px;
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.history-card article h3 {
+    font-family: 'Josefin Sans', sans-serif;
+    font-weight: 600; /* Semibold selon charte */
+    font-size: 18px;
+    margin-bottom: 12px;
+}
+
+.history-card article p {
+    font-family: 'Josefin Sans', sans-serif;
+    font-weight: 300; /* Light selon charte */
+    font-size: 15px;
+    line-height: 1.7;
+    color: #333;
+    margin-bottom: 25px;
+    text-align: justify;
+}
+
+/* ---------- LIGNE D'INFOS (2 COLONNES) ---------- */
+.info-row {
+    display: flex;
+    gap: 30px;
+}
+
+.info-card {
+    flex: 1; /* Chaque carte prend 50% de la ligne */
+    background: #fff;
+    border: 1px solid #eee;
+    border-radius: 12px;
+    padding: 30px;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.info-icon {
+    font-size: 24px;
+    color: #4a4a4a;
+    margin-bottom: 15px;
+}
+
+.info-card h3 {
+    font-family: "mostra-nuova", sans-serif;
+    font-size: 22px;
+    margin-bottom: 15px;
+}
+
+.info-card .label {
+    font-family: 'Josefin Sans', sans-serif;
+    font-weight: 300;
+    font-size: 12px;
+    color: #999;
+    margin-bottom: 5px;
+}
+
+.contact-link {
+    font-family: 'Josefin Sans', sans-serif;
+    color: #000;
+    text-decoration: underline;
+}
+
+/* ---------- RÉSEAUX SOCIAUX ---------- */
+.social-links {
+    display: flex;
+    gap: 15px; /* Aligne les icônes horizontalement */
+    margin-top: 10px;
+}
+
+.social-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    background: #f9f9f9;
+    border-radius: 8px;
+    text-decoration: none;
+    color: #000;
+    font-family: 'Josefin Sans', sans-serif;
+    transition: all 0.3s ease;
+}
+
+.social-item:hover {
+    background: #00eaff;
+    transform: translateY(-3px);
+}
