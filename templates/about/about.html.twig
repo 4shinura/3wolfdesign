@@ -2,14 +2,60 @@
 
 {% block title %}À Propos - 3wolfdesign{% endblock %}
 
-{% block body %}
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('styles/about.css') }}">
+{% endblock %}
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code>C:/laragon/www/3wolfdesign/src/Controller/AboutController.php</code></li>
-        <li>Your template at <code>C:/laragon/www/3wolfdesign/templates/about/index.html.twig</code></li>
-    </ul>
+{% block body %}
+<div class="about-container">
+    <h1 class="page-title">À Propos</h1>
+    <div class="about-layout">
+        <section class="history-card">
+            <h2 class="card-main-title">L'histoire de 3wolfdesign</h2>
+
+            <article>
+                <h3>De la passion à l'expertise</h3>
+                <p>Tout commence par une passion d'enfance. Dès l'âge de 14 ans, le fondateur de 3WOLFDESIGN se plonge dans l'univers minutieux des figurines et des maquettes. Ce qui n'était alors qu'un loisir créatif devient un véritable terrain d'expérimentation lorsque la technologie de l'impression 3D fait son apparition. Poussé par son entourage pour donner vie à des projets complexes, il décide d'investir dans sa première machine. Son objectif ? Allier son savoir-faire de peintre, sa précision manuelle et son amour pour les nouvelles technologies.</p>
+            </article>
+
+            <article>
+                <h3>Une identité forgée par l'histoire</h3>
+                <p>C'est ainsi que naît 3WOLFDESIGN. Un nom porteur de sens, fusion entre « Wolf » — clin d'œil à son surnom de toujours, Louveto — et la « 3D » pour le design numérique. Le parcours entrepreneurial n'est cependant pas une ligne droite. Lancée initialement en micro-entreprise, l'activité doit faire face aux défis de 2020. Malgré une mise en pause forcée par le contexte sanitaire de la Covid, la passion, elle, ne s'arrête jamais. Dans l'ombre, les créations continuent de s'affiner, attendant le moment opportun pour resurgir.</p>
+            </article>
+
+            <article>
+                <h3>Le tournant</h3>
+                <p>En 2023, un imprévu professionnel force un changement de rythme. C'est le déclic. Le fondateur décide de partager son travail sur les réseaux sociaux. La réponse est immédiate et fulgurante : sur TikTok, une communauté de plus de 5 000 passionnés se fédère en seulement deux mois autour de ses créations. Cette reconnaissance numérique transforme une simple réflexion en une étude de marché grandeur nature. Les nuits blanches passées à imaginer l'avenir confirment une évidence : il est temps de passer de l'artisanat à la marque.</p>
+            </article>
+
+            <article>
+                <h3>L'aventure 3WOLFDESIGN</h3>
+                <p>En juin 2023, un nouveau chapitre s'ouvre. La micro-entreprise laisse place à une véritable structure professionnelle. Plus qu'un simple service d'impression, 3WOLFDESIGN s'impose aujourd'hui comme une marque dédiée à l'excellence du sur-mesure et du prototypage. Nous ne créons pas seulement des objets, nous bâtissons un univers où chaque détail compte. Bienvenue dans l'aventure.</p>
+            </article>
+        </section>
+
+        <div class="info-row">
+            <div class="info-card">
+                <i class="fa-solid fa-envelope info-icon"></i>
+                <h3>Contact</h3>
+                <p class="label">Adresse Mail</p>
+                <a href="mailto:3wolfdesign@gmail.com" class="contact-link">3wolfdesign@gmail.com</a>
+            </div>
+
+            <div class="info-card">
+                <i class="fa-solid fa-share-nodes info-icon"></i>
+                <h3>Réseaux</h3>
+                <div class="social-links">
+                    <a href="https://www.tiktok.com/@3wolfdesign" target="_blank" class="social-item">
+                        <i class="fa-brands fa-tiktok"></i> TikTok
+                    </a>
+                    <a href="https://www.instagram.com/3wolfdesign/" target="_blank" class="social-item">
+                        <i class="fa-brands fa-instagram"></i> Instagram
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 {% endblock %}
