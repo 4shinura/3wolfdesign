@@ -1,0 +1,230 @@
+/* ================== General ================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #000;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    
+    -webkit-user-select: none; /* Safari */
+    -ms-user-select: none;     /* IE / Edge legacy */
+    user-select: none;
+}
+
+img {
+    -webkit-user-drag: none;
+}
+
+/* ================== PANNEAUX ================== */
+.side-panel {
+    position: fixed;
+    top: 0;
+    height: 100vh;
+    width: 28%;
+    padding: 40px 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    cursor: pointer;
+    z-index: 20;
+    opacity: 0;
+
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+    will-change: transform;
+}
+
+/* ---------- PANEL GAUCHE ---------- */
+.panel-left {
+    left: 0;
+    width: 25%;
+    transition: width 0.5s ease, transform 0.5s ease;
+    background: linear-gradient(to left, #00000000, rgba(111,111,111,0.3));
+    transform: translateX(-100%);
+    animation: slideInLeft 1s ease-out 3.5s forwards;
+    transform-origin: left center;
+}
+
+.panel-left:hover {
+    width: 35%;
+    background: linear-gradient(to left, #00000000, rgba(200, 200, 200, 0.3));
+    transform: translateX(0);
+}
+
+/* ---------- PANEL DROIT ---------- */
+.panel-right {
+    right: 0;
+    width: 25%;
+    transition: width 0.5s ease, transform 0.5s ease;
+    background: linear-gradient(to right, #00000000, rgba(111,111,111,0.3));
+    transform: translateX(100%);
+    animation: slideInRight 1s ease-out 3.5s forwards;
+    transform-origin: right center;
+}
+
+.panel-right:hover {
+    width: 35%;
+    background: linear-gradient(to right, #00000000, rgba(200, 200, 200, 0.3));
+    transform: translateX(0);
+}
+
+/* ---------- CONTENU PANNEAUX ---------- */
+.panel-icon {
+    width: 200px;          
+    height: 200px;         
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.panel-icon img {
+    max-width: 100%;
+    max-height: 100%;
+    display: block;
+}
+
+.panel-title {
+    font-family: Arial, sans-serif;
+    font-size: 28px;
+    font-weight: bold;
+    color: #fff;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-top: 0;
+    margin-bottom: 20px;
+    transition: color 0.3s ease;
+}
+
+.side-panel:hover .panel-title {
+    color: #00eaff;
+}
+
+.panel-description {
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    color: #b0b0b0;
+    text-align: center;
+
+    line-height: 1.25;      
+    max-width: 260px;      
+    margin: 0;              
+}
+
+
+/* ================== CENTRE ================== */
+.main-wrapper {
+    animation: smoothZoom 3s ease-out forwards;
+}
+
+.container {
+    position: relative;
+    width: 400px;
+    height: 400px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.logo {
+    width: 50%;
+    z-index: 10;
+}
+
+/* ---------- HEXAGONE ---------- */
+.hex-svg {
+    position: absolute;
+    inset: 0;
+    animation: breatheScale 4s ease-in-out infinite 2s;
+    filter: drop-shadow(0 0 5px #00eaff)
+            drop-shadow(0 0 15px #00eaff)
+            drop-shadow(0 0 30px #00aaff);
+}
+
+.hex-path {
+    fill: none;
+    stroke: #00eaff;
+    stroke-width: 5;
+    stroke-dasharray: 900;
+    stroke-dashoffset: 900;
+    animation: drawHex 2s ease forwards;
+}
+
+/* ---------- FLAMMES ---------- */
+.flame-container {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    opacity: 0;
+    animation: flameAppear 1.5s ease 2s forwards;
+}
+
+.flame-layer {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    filter: blur(50px);
+    mix-blend-mode: screen;
+}
+
+.flame-1 {
+    width: 110%;
+    height: 110%;
+    background: radial-gradient(circle, rgba(0,234,255,0.4), transparent 70%);
+    animation: rotateFlame 10s linear infinite reverse;
+}
+
+.flame-2 {
+    width: 130%;
+    height: 120%;
+    background: radial-gradient(ellipse, rgba(0,162,255,0.3), transparent 60%);
+    animation: rotateFlame 15s linear infinite;
+}
+
+.flame-3 {
+    width: 100%;
+    height: 140%;
+    background: radial-gradient(ellipse, rgba(0,255,242,0.2), transparent 50%);
+    animation: rotateFlame 20s linear infinite reverse;
+}
+
+/* ================== ANIMATIONS ================== */
+@keyframes slideInLeft {
+    to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes slideInRight {
+    to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes smoothZoom {
+    0% { transform: scale(0.85); opacity: 0; }
+    100% { transform: scale(1.15); opacity: 1; }
+}
+
+@keyframes drawHex {
+    to { stroke-dashoffset: 0; }
+}
+
+@keyframes breatheScale {
+    0%,100% { transform: scale(1); }
+    50% { transform: scale(1.08); }
+}
+
+@keyframes flameAppear {
+    to { opacity: 1; }
+}
+
+@keyframes rotateFlame {
+    0% { transform: translate(-50%, -50%) rotate(0deg); }
+    100% { transform: translate(-50%, -50%) rotate(360deg); }
+}

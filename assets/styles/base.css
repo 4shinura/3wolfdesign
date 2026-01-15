@@ -1,0 +1,192 @@
+/* --- Mise en page Globale --- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    /* Josefin Sans Light pour les textes par défaut selon la charte */
+    font-family: 'Josefin Sans', sans-serif;
+    font-weight: 300;
+}
+
+.site-wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Toute la hauteur de l'écran */
+    background-color: #ffffff;
+    overflow-x: hidden; /* Évite les scrolls horizontaux */
+}
+
+header {
+    z-index: 100;
+}
+
+.nav-links a:hover, 
+.footer-center a:hover, 
+.contact-bar a:hover {
+    /* text-decoration: underline; */
+    color: #00eaff;
+}
+
+/* Zone entre la nav et le footer */
+.content-center {
+    flex: 1; /* Prend tout l'espace restant */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    width: 100%;
+}
+
+/* --- Barre de Navigation --- */
+.main-navbar {
+    background-color: #4a4a4a;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 7vh;
+    padding: 30px;
+}
+
+.nav-logo-img { height: 5vh; }
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 150px;
+}
+
+.nav-links a {
+    color: white;
+    text-decoration: none;
+    font-family: "mostra-nuova", sans-serif;
+    font-weight: 600;
+    font-size: 14px; 
+    text-transform: uppercase;
+    transition: color 0.3s ease;
+}
+
+.nav-auth { display: flex; gap: 10px; }
+
+.btn-login, .btn-register {
+    font-family: 'Josefin Sans', sans-serif;
+    font-weight: 400;
+    padding: 5% 15px;
+    border-radius: 4px;
+    text-decoration: none;
+}
+
+.btn-login { background: white; color: black; }
+.btn-register { background: #00eaff; color: black; font-weight: 600; } /* Semibold */
+
+.contact-bar {
+    background-color: #7a7a7a;
+    color: white;
+    padding: 5px 30px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 15px;
+    /* Josefin Sans Light pour les informations secondaires */
+    font-weight: 400;
+}
+
+.contact-bar a {
+    color: white;
+    text-decoration: none;
+}
+
+/* --- Footer --- */
+.main-footer {
+    background-color: #ffffff;
+    padding: 40px 0 0 0; /* Plus d'espace en haut pour les partenaires */
+    display: flex;
+    flex-direction: column;
+    color: white;
+}
+
+/* --- Section Partenaires --- */
+.footer-partners {
+    background-color: #ffffff; /* Fond blanc pour la section partenaires comme sur l'image */
+    color: #000;
+    padding: 40px 30px;
+    text-align: center;
+}
+
+.footer-partners h2 {
+    font-family: "mostra-nuova", sans-serif;
+    font-size: 36px;
+    margin-bottom: 30px;
+    text-transform: none; /* Selon l'image "Partenaires" n'est pas en majuscules */
+}
+
+.partners-grid {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.partner-card {
+    flex: 1;
+    background: #fff;
+    border: 1px solid #eee;
+    border-radius: 8px;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+.partner-card img {
+    height: 60px;
+    margin-bottom: 20px;
+    object-fit: contain;
+}
+
+.partner-card h3 {
+    font-family: 'Josefin Sans', sans-serif;
+    font-weight: 600; /* Emphase selon charte */
+    font-size: 24px;
+    margin-bottom: 15px;
+}
+
+.partner-card p {
+    font-family: 'Josefin Sans', sans-serif;
+    font-weight: 300; /* Textes courants selon charte */
+    font-size: 14px;
+    line-height: 1.6;
+    color: #666;
+    margin-bottom: 15px;
+}
+
+.partner-card a {
+    color: #000;
+    font-size: 13px;
+    text-decoration: underline;
+    font-weight: 400;
+}
+
+/* --- Barre de bas de page (Copyright / Mentions) --- */
+.footer-bottom-bar {
+    background-color: #000;
+    height: 8vh;
+    padding: 0 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 13px;
+    border-top: 1px solid #222;
+}
+
+/* On garde vos styles de centrage pour footer-left, center, right ici */
+.footer-left, .footer-center, .footer-right {
+    flex: 1;
+    display: flex;
+}
+.footer-center { justify-content: center; }
+.footer-center a { color: white; text-decoration: none; margin: 0 15px; font-weight: 600; }
+.footer-center a:hover { text-decoration: underline; }
