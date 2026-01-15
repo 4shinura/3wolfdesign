@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}CGV - 3wolfdesign{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('styles/legal.css') }}">
+{% endblock %}
+
+{% block body %}
+<div class="legal-container">
+    <h1 class="page-title">Conditions Générales de Vente</h1>
+
+    <div class="legal-content">
+        <div class="legal-header">
+            <p><strong>Date de mise à jour :</strong> 15/01/2026</p>
+            <p><strong>Numéro SIREN :</strong> 97967634300010.</p>
+        </div>
+
+        <section class="legal-section">
+            <h2>1. Objet et Identification</h2>
+            <p>L'entreprise 3WOLFDESIGN EI, immatriculée au RCS de La Roche-sur-Yon sous le numéro 97967634300010, propose la vente de produits via son catalogue et son site internet 3wolfdesign.???</p>
+        </section>
+
+        <section class="legal-section">
+            <h2>2. Prix et Commandes</h2>
+            <p>Les produits sont vendus aux prix en vigueur lors de la commande, exprimés en Euros et toutes taxes comprises (TTC). L'entreprise se réserve le droit de modifier ses tarifs à tout moment.</p>
+            <p>Le paiement est exigible au moment de la commande par carte bancaire.</p>
+        </section>
+
+        <section class="legal-section">
+            <h2>3. Livraison et Délais</h2>
+            <p>L'Entreprise s'engage à délivrer le Produit dans un délai de 15 jours à compter de la souscription. La livraison peut s'effectuer par remise directe, en point relais ou à l'adresse indiquée lors de la commande.</p>
+        </section>
+
+        <section class="legal-section">
+            <h2>4. Droit de Rétractation</h2>
+            <p>Conformément à la loi, le Client consommateur dispose d'un délai de 14 jours suivant la réception du produit pour exercer son droit de rétractation sans avoir à justifier de motifs.</p>
+            <p>Pour exercer ce droit, le client doit notifier sa décision par mail à 3wolfdesign@gmail.com ou par courrier.</p>
+        </section>
+
+        <section class="legal-section">
+            <h2>5. Garanties et Réclamations</h2>
+            <p>Tous nos produits bénéficient de la garantie légale de conformité (2 ans) et de la garantie contre les vices cachés. En cas de non-conformité, le produit peut être retourné pour échange ou remboursement.</p>
+            <p>Toute réclamation doit être formulée dans un délai de 30 jours ouvrés à compter de la date du paiement.</p>
+        </section>
+
+        <section class="legal-section">
+            <h2>6. Propriété Intellectuelle</h2>
+            <p>L'ensemble des éléments du site (logos, images, textes, bases de données) sont la propriété exclusive de 3WOLFDESIGN. Toute reproduction ou utilisation sans accord écrit préalable est interdite.</p>
+        </section>
+    </div>
+</div>
+{% endblock %}

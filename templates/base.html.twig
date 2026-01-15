@@ -28,7 +28,7 @@
                     <li><a href="{{ path('app_home') }}">Accueil</a></li>
                     <li><a href="#">Catalogue</a></li>
                     <li><a href="#">Sur Mesure</a></li>
-                    <li><a href="#">À Propos</a></li>
+                    <li><a href="{{ path('app_about') }}">À Propos</a></li>
                     <li><a href="#">Partenaires & Clients</a></li>
                 </ul>
                 <div class="nav-auth">
@@ -39,7 +39,7 @@
            
             <div class="contact-bar">
                 <span>📩 Contactez-nous : 3wolfdesign@gmail.com</span>
-                <a href="#">Formulaire de Contact</a>
+                <a href="{{ path('app_legal_contact') }}">Formulaire de Contact</a>
             </div>
         </header>
 
@@ -72,11 +72,13 @@
                     <span>© 2026 3wolfdesign. Tous droits réservés.</span>
                 </div>
                 <div class="footer-center">
-                    <a href="#">Mentions légales</a>
-                    <a href="#">Contact</a>
+                    <a href="{{ path('app_legal_informations') }}">Mentions légales</a>
+                    <a href="{{ path('app_legal_cgv') }}">CGV</a>
+                    <a href="{{ path('app_legal_cgu') }}">CGU</a>
+                    <a href="{{ path('app_legal_contact') }}">Contact</a>
                 </div>
                 <div class="footer-right">
-                    </div>
+                </div>
             </div>
         </footer>
 

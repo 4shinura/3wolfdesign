@@ -14,6 +14,14 @@ body {
     color: #000;
 }
 
+.page-title {
+    font-weight: 400;
+    font-size: 48px;
+    text-align: center;
+    margin-bottom: 50px;
+    color: #000;
+}
+
 .site-wrapper {
     display: flex;
     flex-direction: column;
@@ -183,6 +191,6 @@ header {
     font-size: 13px;
 }
 
-.footer-left, .footer-center, .footer-right { flex: 1; display: flex; }
+.footer-left, .footer-center, .footer-right { flex: 1; display: flex; font-size: medium;}
 .footer-center { justify-content: center; }
 .footer-center a { color: white; text-decoration: none; margin: 0 15px; font-weight: 600; }
