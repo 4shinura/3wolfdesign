@@ -1,16 +1,79 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
     <head>
         <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>{% block title %}3wolfdesign{% endblock %}</title>
         <link rel="icon" href="{{ asset('img/logo.ico') }}">
-        
-        {# On crée un bloc pour le CSS de base ou spécifique #}
+
         {% block stylesheets %}
+            <link rel="stylesheet" href="https://use.typekit.net/jwvOnjh.css">
+            <link rel="preconnect" href="https://fonts.googleapis.com">
+            <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+            <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400;600&display=swap" rel="stylesheet">
             <link rel="stylesheet" href="{{ asset('styles/base.css') }}">
         {% endblock %}
     </head>
-    <body>
-        {% block body %}{% endblock %}
+    <body class="site-wrapper">
+        <header>
+            <nav class="main-navbar">
+                <img src="{{ asset('img/3wolfdesign-logo.png') }}" class="nav-logo-img" alt="Logo">
+                <ul class="nav-links">
+                    <li><a href="{{ path('app_home') }}">Accueil</a></li>
+                    <li><a href="#">Catalogue</a></li>
+                    <li><a href="#">Sur Mesure</a></li>
+                    <li><a href="#">À Propos</a></li>
+                    <li><a href="#">Partenaires & Clients</a></li>
+                </ul>
+                <div class="nav-auth">
+                    <a href="#" class="btn-login">Connexion</a>
+                    <a href="#" class="btn-register">Inscription</a>
+                </div>
+            </nav>
+           
+            <div class="contact-bar">
+                <span>📩 Contactez-nous : 3wolfdesign@gmail.com</span>
+                <a href="#">Formulaire de Contact</a>
+            </div>
+        </header>
+
+        <main class="content-center">
+            {% block body %}{% endblock %}
+        </main>
+
+        <footer class="main-footer">
+            <div class="footer-partners">
+                <h2>Partenaires</h2>
+                <div class="partners-grid">
+                    <div class="partner-card">
+                        <img src="{{ asset('img/logo-raf.png') }}" alt="Royal Air Frames">
+                        <h3>Royal Air Frames</h3>
+                        <p>Royal Air Frames est spécialisée dans la fourniture de short-kits de haute qualité et de conception précise, de fichiers DXF et de conceptions CAO d'avions.</p>
+                        <a href="https://royalairframes.com" target="_blank">https://royalairframes.com</a>
+                    </div>
+
+                    <div class="partner-card">
+                        <img src="{{ asset('img/logo-grimaud.png') }}" alt="Grimaud Frères">
+                        <h3>Grimaud Frères</h3>
+                        <p>Grimaud Frères est la branche d'activités palmipèdes, pintades et pigeons du Groupe Grimaud, leader en sélection génétique animale multi-espèces, biopharmacie et protéines innovantes.</p>
+                        <a href="https://grimaudfreres.com" target="_blank">https://grimaudfreres.com</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom-bar">
+                <div class="footer-left">
+                    <span>© 2026 3wolfdesign. Tous droits réservés.</span>
+                </div>
+                <div class="footer-center">
+                    <a href="#">Mentions légales</a>
+                    <a href="#">Contact</a>
+                </div>
+                <div class="footer-right">
+                    </div>
+            </div>
+        </footer>
+
+        {% block javascripts %}{% endblock %}
     </body> 
 </html>
