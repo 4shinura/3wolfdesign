@@ -1,0 +1,108 @@
+.legal-container {
+    max-width: 70%;
+    margin: 50px auto;
+    padding: 0 20px;
+}
+
+.legal-header {
+    font-size: 20px;
+    margin-bottom: 50px;
+}
+
+.legal-content {
+    width: 100%;
+    border: 1px solid #eee;
+    border-radius: 12px;
+    padding: 60px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+}
+
+.siret-number {
+    font-family: "mostra-nuova", sans-serif;
+    text-align: center;
+    font-weight: 600;
+    font-size: 18px;
+    margin-bottom: 50px;
+    text-transform: uppercase;
+}
+
+.legal-section {
+    margin-bottom: 40px;
+}
+
+.legal-section h2 {
+    font-family: "mostra-nuova", sans-serif;
+    font-size: 18px;
+    text-align: left;
+    margin-bottom: 20px;
+    color: #000;
+}
+
+.legal-section p {
+    font-family: 'Josefin Sans', sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 1.8;
+    color: #444;
+    text-align: justify;
+    margin-bottom: 15px;
+}
+
+
+/* Contact */
+.contact-container {
+    width: 70%;          
+    max-width: 1200px;    
+    margin: 80px auto;    
+    padding: 0 20px;
+    font-family: 'Josefin Sans', sans-serif;
+}
+
+.contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.form-row {
+    display: flex;
+    gap: 20px;
+}
+
+.form-input, .form-textarea {
+    flex: 1;
+    padding: 15px;
+    border: 1px solid #ccc;
+    font-family: 'Josefin Sans', sans-serif;
+    font-weight: 300;
+    font-size: 16px;
+    outline: none;
+    background: transparent;
+}
+
+.full-width {
+    width: 100%;
+}
+
+.form-textarea {
+    min-height: 250px;
+    resize: vertical;
+}
+
+/* Style du bouton "Envoyer" selon ta maquette */
+.btn-submit {
+    background-color: #000;
+    color: #fff;
+    border: none;
+    padding: 15px;
+    font-family: 'Josefin Sans', sans-serif;
+    font-weight: 400;
+    font-size: 18px;
+    cursor: pointer;
+    text-transform: none;
+    transition: 0.3s ease;
+}
+
+.btn-submit:hover {
+    background-color: #333;
+}

@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}CGU - 3wolfdesign{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('styles/legal.css') }}">
+{% endblock %}
+
+{% block body %}
+<div class="legal-container">
+    <h1 class="page-title">Conditions Générales d'Utilisation</h1>
+
+    <div class="legal-content">
+        <div class="legal-header">
+            <p><strong>Date de mise à jour :</strong> 15/01/2026</p>
+            <p>L'entreprise 3wolfdesign EI est immatriculée sous le numéro SIREN : 97967634300010.</p>
+        </div>
+
+        <section class="legal-section">
+            <h2>1. Objet et Acceptation</h2>
+            <p>Les présentes CGU déterminent les conditions d'utilisation sur le site 3wolfdesign.???. Le Client déclare en avoir pris connaissance et les avoir acceptées sans réserve avant toute commande.</p>
+        </section>
+
+        <section class="legal-section">
+            <h2>2. Prix et Paiement</h2>
+            <p>Les produits sont vendus aux prix en vigueur lors de la commande, exprimés en Euros TTC. Le paiement est exigible au moment de la commande par carte bancaire, chèque, virement ou espèces.</p>
+        </section>
+
+        <section class="legal-section">
+            <h2>3. Livraison et Délais</h2>
+            <p>L'Entreprise s'engage à délivrer le produit dans un délai de 15 jours à compter de la souscription. La livraison s'effectue par remise directe, en magasin/point relais ou au lieu indiqué lors de la commande.</p>
+        </section>
+
+        <section class="legal-section">
+            <h2>4. Droit de Rétractation</h2>
+            <p>Le Client consommateur dispose d'un délai de 14 jours suivant la réception du produit pour exercer son droit de rétractation. Pour ce faire, il doit notifier sa décision par mail à 3wolfdesign@gmail.com.</p>
+        </section>
+
+        <section class="legal-section">
+            <h2>5. Garanties Légales</h2>
+            <p>Tous les produits bénéficient de la garantie légale de conformité (2 ans) et de la garantie contre les vices cachés. En cas de défaut, le Client peut choisir entre la réparation ou le remplacement du bien.</p>
+        </section>
+
+        <section class="legal-section">
+            <h2>6. Propriété Intellectuelle</h2>
+            <p>L'ensemble des éléments du site (logos, images, textes, etc.) sont la propriété pleine et entière de l'Entreprise. Toute utilisation sans consentement préalable est interdite.</p>
+        </section>
+
+        <section class="legal-section">
+            <h2>7. Données Personnelles</h2>
+            <p>Conformément au RGPD, le Client dispose d'un droit d'accès, de rectification et d'opposition à ses données. Les demandes s'effectuent par mail à 3wolfdesign@gmail.com.</p>
+        </section>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Contact - 3wolfdesign{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('styles/legal.css') }}">
+{% endblock %}
+
+{% block body %}
+<div class="contact-container">
+    <h1 class="page-title">Formulaire de Contact</h1>
+
+    {# Affichage du message de succès après envoi #}
+    {% for label, messages in app.flashes %}
+        {% for message in messages %}
+            <div class="alert alert-{{ label }}" style="color: green; text-align: center; margin-bottom: 20px;">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endfor %}
+
+    {{ form_start(contactForm, {'attr': {'class': 'contact-form'}}) }}
+        <div class="form-row">
+            {{ form_widget(contactForm.nom) }}
+            {{ form_widget(contactForm.prenom) }}
+        </div>
+        
+        {{ form_widget(contactForm.email) }}
+        {{ form_widget(contactForm.message) }}
+
+        <button type="submit" class="btn-submit">Envoyer</button>
+    {{ form_end(contactForm) }}
+</div>
+{% endblock %}
