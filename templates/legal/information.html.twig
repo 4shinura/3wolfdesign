@@ -1,0 +1,67 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mentions Légales - 3wolfdesign{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('styles/legal.css') }}">
+{% endblock %}
+
+
+{% block body %}
+<div class="legal-container">
+    <h1 class="page-title">Mentions Légales</h1>
+
+    <div class="legal-content">
+        <div class="legal-header">
+            <p><strong>Date de mise à jour :</strong> 20/01/2026</p>
+            <p><strong>Numéro SIREN :</strong> 97967634300010.</p>
+        </div>
+
+        <section class="legal-section" id="editeur">
+            <h2>1. Identification de l'Éditeur</h2>
+            <p>Le site <strong>3wolfdesign</strong> est édité par l'entreprise 3wolfdesign EI, immatriculée au RCS de La Roche-sur-Yon sous le numéro 97967634300010.</p>
+            <p>
+                <strong>Siège social : </strong>7 rue des chataigniers, 85500 Chanverrie<br>
+                <strong>Directeur de la publication : </strong>RODRIGUES Tony<br>
+                <strong>Contact : </strong>3wolfdesign@gmail.com 
+            </p>
+        </section>
+
+        <section class="legal-section" id="hebergement">
+            <h2>2. Hébergement</h2>
+            <p>Le site est hébergé par [Nom de l'hébergeur], dont le siège social est situé au [Adresse de l'hébergeur].</p>
+        </section>
+
+        <section class="legal-section" id="propriete">
+            <h2>3. Propriété Intellectuelle</h2>
+            <p>L'ensemble des éléments du site (logos, images, bases de données) sont la propriété exclusive de 3wolfdesign.</p>
+            <p>Toute reproduction, représentation, modification ou adaptation de tout ou partie des éléments du site est strictement interdite sans accord écrit préalable.</p>
+        </section>
+
+        <section class="legal-section" id="rgpd">
+            <h2>4. Protection des Données (RGPD)</h2>
+            <p>Conformément au Règlement Général sur la Protection des Données (RGPD), 3wolfdesign s'engage à protéger la vie privée de ses utilisateurs.</p>
+            <p>
+                <strong>Collecte des données :</strong> Les données collectées (nom, email, adresse de livraison) sont nécessaires au traitement de vos commandes  et à la gestion de la relation client.
+            </p>
+            <p>
+                <strong>Destinataires :</strong> Vos données sont uniquement destinées à 3wolfdesign et ne sont jamais revendues à des tiers.
+            </p>
+            <p>
+                <strong>Vos droits :</strong> Vous disposez d'un droit d'accès, de rectification, de suppression et d'opposition au traitement de vos données personnelles. Pour exercer ce droit, contactez-nous par mail à 3wolfdesign@gmail.com.
+            </p>
+        </section>
+
+        {# <section class="legal-section" id="cookie">
+            <h2>X. Utilisation des Cookies</h2>
+            <p>Le site peut utiliser des cookies pour améliorer l'expérience utilisateur et réaliser des statistiques de visite. Vous pouvez configurer votre navigateur pour refuser ces cookies.</p>
+        </section> #}
+
+        <section class="legal-section" id="litige">
+            <h2>5. Litiges</h2>
+            <p>Les présentes mentions sont régies par le droit français. En cas de litige, et après tentative de médiation, les tribunaux français seront seuls compétents.</p>
+        </section>
+    </div>
+</div>
+{% endblock %}

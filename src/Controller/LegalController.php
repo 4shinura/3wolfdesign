@@ -15,7 +15,7 @@ final class LegalController extends AbstractController
     #[Route('/mentions-legales', name: 'app_legal_informations')]
     public function legal_infos(): Response
     {
-        return $this->render('legal/informations.html.twig', [
+        return $this->render('legal/information.html.twig', [
             'controller_name' => 'LegalController',
         ]);
     }
@@ -39,18 +39,13 @@ final class LegalController extends AbstractController
     #[Route('/contact', name: 'app_legal_contact')]
     public function contact(Request $request, MailerInterface $mailer): Response
     {
-        // 1. On crée l'objet formulaire
         $form = $this->createForm(ContactType::class);
-
-        // 2. On demande au formulaire d'analyser la requête
         $form->handleRequest($request);
 
-        // 3. Si le formulaire est soumis et valide
         if ($form->isSubmitted() && $form->isValid()) {
-            // On récupère les données nettoyées
+
             $data = $form->getData();
 
-            // Création de l'email avec les données du formulaire
             $email = (new Email())
                 ->from($data['email'])
                 ->to('ash4evergarden@gmail.com') 
@@ -64,9 +59,8 @@ final class LegalController extends AbstractController
             return $this->redirectToRoute('app_legal_contact');
         }
 
-        // 4. On envoie la VUE du formulaire au template
         return $this->render('legal/contact.html.twig', [
-            'contactForm' => $form->createView(), // C'est ici que la variable est créée pour Twig
+            'contactForm' => $form->createView()
         ]);
     }
 }
