@@ -1,0 +1,111 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon Compte - 3wolfdesign{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-12 mb-4">
+            <h1 class="h2">Bonjour, {{ user.userIdentifier }} !</h1>
+            <p class="text-muted">Bienvenue dans votre espace de gestion personnel.</p>
+        </div>
+    </div>
+
+    {# Affichage des messages flash, ex : succès après modif mot de passe #}
+    {% for label, messages in app.flashes %}
+        {% for message in messages %}
+            <div class="alert alert-{{ label }} alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% endfor %}
+    {% endfor %}
+
+    <div class="row g-4">
+        {# Carte : Commande #}
+        <div class="col-md-6">
+            <div class="card h-100 shadow-sm border-0">
+                <div class="card-body">
+                    <div class="d-flex align-items-center mb-3">
+                        <div class="bg-dark text-white rounded-circle p-2 me-3">
+                            📦
+                        </div>
+                        <h5 class="card-title mb-0">Mes Commandes</h5>
+                    </div>
+                    <p class="card-text text-muted">Consultez l'historique de vos achats et suivez vos colis en cours.</p>
+                    <button class="btn btn-outline-dark w-100" disabled>Bientôt disponible</button>
+                </div>
+            </div>
+        </div>
+
+        {# Carte : Contact #}
+        <div class="col-md-6">
+            <div class="card h-100 shadow-sm border-0">
+                <div class="card-body">
+                    <div class="d-flex align-items-center mb-3">
+                        <div class="bg-secondary text-white rounded-circle p-2 me-3">
+                            📩
+                        </div>
+                        <h5 class="card-title mb-0">Contact</h5>
+                    </div>
+                    <p class="card-text text-muted">Vous avez une question, une demande ?</p>
+                    <a href="{{ path('app_legal_contact') }}" class="btn btn-outline-secondary w-100">Envoyez nous un message</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <br>
+
+    <div class="row g-4">
+        {# Carte : Sécurité #}
+        <div class="col-md-6">
+            <div class="card h-100 shadow-sm border-0">
+                <div class="card-body">
+                    <div class="d-flex align-items-center mb-3">
+                        <div class="bg-primary text-white rounded-circle p-2 me-3">
+                            🔑
+                        </div>
+                        <h5 class="card-title mb-0">Sécurité</h5>
+                    </div>
+                    <p class="card-text text-muted">Protégez votre compte en mettant à jour votre mot de passe.</p>
+                    <a href="{{ path('app_account_password') }}" class="btn btn-outline-primary w-100">Modifier mon mot de passe</a>
+                </div>
+            </div>
+        </div>
+
+        {# Carte : Déconnexion #}
+        <div class="col-md-6">
+            <div class="card h-100 shadow-sm border-0">
+                <div class="card-body">
+                    <div class="d-flex align-items-center mb-3">
+                        <div class="bg-danger text-white rounded-circle p-2 me-3">
+                            🚪
+                        </div>
+                        <h5 class="card-title mb-0">Session</h5>
+                    </div>
+                    <p class="card-text text-muted">Vous souhaitez vous déconnectez ?</p>
+                    <a href="{{ path('app_logout') }}" class="btn btn-outline-danger w-100">Me déconnecter</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {# Zone Admin #}
+    {% if is_granted('ROLE_ADMIN') %}
+    <div class="row mt-5">
+        <div class="col-12">
+            <div class="alert alert-warning border-0 shadow-sm">
+                <h4 class="alert-heading">Espace Administration 🐺</h4>
+                <p>En tant qu'administrateur, vous pouvez gérer les produits et les utilisateurs du site.</p>
+                <hr>
+                <a href="#" class="btn btn-warning">Accéder au Dashboard Admin</a>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+</div>
+{% endblock %}
+
+{% block partenaires %}{% endblock %}
