@@ -69,7 +69,7 @@
                         <h5 class="card-title mb-0">Sécurité</h5>
                     </div>
                     <p class="card-text text-muted">Protégez votre compte en mettant à jour votre mot de passe.</p>
-                    <a href="{{ path('app_account_password') }}" class="btn btn-outline-primary w-100">Modifier mon mot de passe</a>
+                    <a href="{{ path('app_user_password') }}" class="btn btn-outline-primary w-100">Modifier mon mot de passe</a>
                 </div>
             </div>
         </div>
@@ -96,10 +96,10 @@
     <div class="row mt-5">
         <div class="col-12">
             <div class="alert alert-warning border-0 shadow-sm">
-                <h4 class="alert-heading">Espace Administration 🐺</h4>
+                <h4 class="alert-heading">Espace Administration</h4>
                 <p>En tant qu'administrateur, vous pouvez gérer les produits et les utilisateurs du site.</p>
                 <hr>
-                <a href="#" class="btn btn-warning">Accéder au Dashboard Admin</a>
+                <a href="{{ path('app_admin_dashboard') }}" class="btn btn-warning">Accéder au Dashboard Admin</a>
             </div>
         </div>
     </div>

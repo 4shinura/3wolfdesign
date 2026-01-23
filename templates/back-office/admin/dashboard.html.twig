@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Tableau de Bord - 3wolfdesign{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+    <h1 class="mb-4">Dashboard Administrateur</h1>
+
+    <div class="row g-4">
+        {# Stats Utilisateurs #}
+        <div class="col-md-4">
+            <div class="card bg-dark text-white shadow">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Utilisateurs</h5>
+                    <p class="display-4">{{ totalUsers }}</p>
+                    <a href="{{ path('app_admin_manage_users') }}" class="btn btn-outline-light btn-sm">Gérer les membres</a>
+                </div>
+            </div>
+        </div>
+
+        {# Stats Produits (Exemple) #}
+        <div class="col-md-4">
+            <div class="card bg-primary text-white shadow">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Produits</h5>
+                    <p class="display-4">0</p> {# Tu remplaceras par ta variable plus tard #}
+                    <button class="btn btn-outline-light btn-sm" disabled>Bientôt disponible</button>
+                </div>
+            </div>
+        </div>
+
+        {# Stats Commandes (Exemple) #}
+        <div class="col-md-4">
+            <div class="card bg-success text-white shadow">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Ventes</h5>
+                    <p class="display-4">0€</p>
+                    <button class="btn btn-outline-light btn-sm" disabled>Voir les ventes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block partenaires %}{% endblock %}

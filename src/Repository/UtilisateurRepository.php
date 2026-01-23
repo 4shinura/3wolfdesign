@@ -33,6 +33,16 @@ class UtilisateurRepository extends ServiceEntityRepository implements PasswordU
         $this->getEntityManager()->flush();
     }
 
+    public function findByEmailPart(string $search): array
+    {
+        return $this->createQueryBuilder('u')
+            ->andWhere('u.email LIKE :val')
+            ->setParameter('val', '%' . $search . '%')
+            ->orderBy('u.id', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
     //    /**
     //     * @return Utilisateur[] Returns an array of Utilisateur objects
     //     */

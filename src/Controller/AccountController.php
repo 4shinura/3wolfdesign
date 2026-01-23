@@ -12,21 +12,22 @@ use Symfony\Component\Routing\Attribute\Route;
 use App\Entity\Utilisateur;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
+#[Route('/user', name: 'app_user_')]
+#[IsGranted('ROLE_USER')]
 class AccountController extends AbstractController
 {
-    #[Route('/mon-compte', name: 'app_account')]
-    #[IsGranted('ROLE_USER')] 
+    #[Route('/mon-compte', name: 'account')] 
     public function index(): Response
     {
         /** @var Utilisateur $user */
         $user = $this->getUser();
 
-        return $this->render('account/account.html.twig', [
+        return $this->render('back-office/user/account.html.twig', [
             'user' => $user,
         ]);
     }
 
-    #[Route('/mon-compte/modifier-mdp', name: 'app_account_password')]
+    #[Route('/mon-compte/modifier-mdp', name: 'password')]
     #[IsGranted('ROLE_USER')] 
     public function changePassword(
         Request $request, 
@@ -59,7 +60,7 @@ class AccountController extends AbstractController
             return $this->redirectToRoute('app_account');
         }
 
-        return $this->render('account/change_password.html.twig', [
+        return $this->render('back-office/user/change_password.html.twig', [
             'passwordForm' => $form->createView(),
         ]);
     }
