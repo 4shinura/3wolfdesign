@@ -38,26 +38,22 @@ class AccountController extends AbstractController
         /** @var Utilisateur $user */
         $user = $this->getUser();
 
-        // 2. On crée le formulaire (celui que tu avais déjà !)
         $form = $this->createForm(ChangePasswordFormType::class);
         $form->handleRequest($request);
 
-        // 3. Traitement du formulaire
         if ($form->isSubmitted() && $form->isValid()) {
-            // Récupération du mot de passe saisi (non haché)
+
             $newPassword = $form->get('plainPassword')->getData();
 
-            // Hachage et mise à jour
             $user->setPassword(
                 $userPasswordHasher->hashPassword($user, $newPassword)
             );
 
             $entityManager->flush();
 
-            // Message de succès
             $this->addFlash('success', 'Votre mot de passe a bien été mis à jour.');
 
-            return $this->redirectToRoute('app_account');
+            return $this->redirectToRoute('app_user_account');
         }
 
         return $this->render('back-office/user/change_password.html.twig', [

@@ -37,8 +37,8 @@ class ChangePasswordFormType extends AbstractType
 
                         // Force un mot de passe pas trop simple
                         new PasswordStrength(
-                            minScore: PasswordStrength::STRENGTH_MEDIUM,
-                            message: "Veuillez choisir un mot de pas plus complexe"
+                            minScore: PasswordStrength::STRENGTH_WEAK,
+                            message: "Veuillez choisir un mot de passe plus complexe"
                         ), 
                     ],
                     'label' => 'Nouveau mot de passe',
