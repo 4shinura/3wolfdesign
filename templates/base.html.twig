@@ -4,7 +4,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>{% block title %}3wolfdesign{% endblock %}</title>
-        <link rel="icon" href="{{ asset('img/logo.ico') }}">
+        <link rel="icon" href="{{ asset('img/logo/logo.ico') }}">
 
         {% block stylesheets %}
             <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -34,14 +34,13 @@
         <div class="fixed-details-container">
             <img src="{{ asset('img/deco/hexa-1.png') }}" class="detail-hexa h-top-left" alt="">
             <img src="{{ asset('img/deco/hexa-2.png') }}" class="detail-hexa h-mid-right" alt="">
-            <img src="{{ asset('img/deco/hexa-3.png') }}" class="detail-hexa h-bottom-left" alt="">
         </div>
         <header>
             <nav class="main-navbar d-flex align-items-center">
-                <img src="{{ asset('img/3wolfdesign-logo.png') }}" class="nav-logo-img" alt="Logo">
+                <img src="{{ asset('img/logo/3wolfdesign-logo.png') }}" class="nav-logo-img" alt="Logo">
                 <ul class="nav nav-links">
                     <li class="nav-item"><a href="{{ path('app_home') }}">Accueil</a></li>
-                    <li class="nav-item"><a href="#">Catalogue</a></li>
+                    <li class="nav-item"><a href="{{ path('app_gallery') }}">Catalogue</a></li>
                     <li class="nav-item"><a href="#">Sur Mesure</a></li>
                     <li class="nav-item"><a href="{{ path('app_about') }}">À Propos</a></li>
                     <li class="nav-item"><a href="#">Partenaires & Clients</a></li>
@@ -75,14 +74,14 @@
                 <h2>Partenaires</h2>
                 <div class="partners-grid">
                     <div class="partner-card">
-                        <img src="{{ asset('img/logo-raf.png') }}" alt="Royal Air Frames">
+                        <img src="{{ asset('img/logo/logo-raf.png') }}" alt="Royal Air Frames">
                         <h3>Royal Air Frames</h3>
                         <p>Royal Air Frames est spécialisée dans la fourniture de short-kits de haute qualité et de conception précise, de fichiers DXF et de conceptions CAO d'avions.</p>
                         <a href="https://royalairframes.com" target="_blank">https://royalairframes.com</a>
                     </div>
 
                     <div class="partner-card">
-                        <img src="{{ asset('img/logo-grimaud.png') }}" alt="Grimaud Frères">
+                        <img src="{{ asset('img/logo/logo-grimaud.png') }}" alt="Grimaud Frères">
                         <h3>Grimaud Frères</h3>
                         <p>Grimaud Frères est la branche d'activités palmipèdes, pintades et pigeons du Groupe Grimaud, leader en sélection génétique animale multi-espèces, biopharmacie et protéines innovantes.</p>
                         <a href="https://grimaudfreres.com" target="_blank">https://grimaudfreres.com</a>

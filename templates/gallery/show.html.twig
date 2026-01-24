@@ -1,0 +1,73 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Galerie Impressions 3D - 3wolfdesign{% endblock %}
+
+{% block body %}
+<div class="container mt-4 mb-5">
+    <nav aria-label="breadcrumb" class="mb-4">
+        <ol class="breadcrumb bg-transparent p-0">
+            <li class="breadcrumb-item"><a href="{{ path('app_gallery') }}" class="text-muted text-decoration-none">Galerie</a></li>
+            <li class="breadcrumb-item active text-dark fw-bold">{{ produit.nom }}</li>
+        </ol>
+    </nav>
+
+    <div class="row g-5">
+        <div class="col-lg-8">
+            <div class="product-image-container ">
+                {% if produit.imgPath %}
+                    <img src="{{ asset('img/produits/3d/' ~ produit.imgPath) }}" 
+                         class="img-fluid w-100" 
+                         alt="{{ produit.nom }}"
+                         style="max-height: 500px; object-fit: contain;">
+                {% else %}
+                    <div class="d-flex align-items-center justify-content-center bg-light" style="min-height: 500px;">
+                        <i class="fas fa-image fa-5x text-secondary"></i>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <div class="sticky-top" style="top: 20px;">
+                <h1 class="display-5 fw-bold text-dark mb-3">{{ produit.nom }}</h1>
+                
+                <div class="mb-4">
+                    <span class="badge rounded-pill bg-dark px-3 py-2">
+                        {{ produit.estAchetable ? 'Boutique' : 'Réalisation d\'Exposition' }}
+                    </span>
+                </div>
+
+                <div class="description-box mb-5">
+                    <h5 class="fw-bold small text-secondary border-bottom pb-2 mb-3">Description</h5>
+                    <p class="text-muted lh-lg" style="white-space: pre-line;">
+                        {{ produit.description|default('Aucune description détaillée pour ce modèle.') }}
+                    </p>
+                </div>
+
+                {% if produit.estAchetable %}
+                    <div class="card border-0 bg-light p-4 rounded-4 shadow-sm">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <span class="text-secondary">Prix unitaire</span>
+                            <span class="h2 fw-bold mb-0">{{ produit.prix|number_format(2, ',', ' ') }} €</span>
+                        </div>
+                        <button class="btn btn-primary btn-lg w-100 rounded-pill shadow">
+                            <i class="fas fa-shopping-cart me-2"></i> Ajouter au panier
+                        </button>
+                    </div>
+                {% else %}
+                    <div class="alert alert-info border-0 rounded-4 p-4">
+                        <h6 class="fw-bold"><i class="fas fa-info-circle me-2"></i> Modèle d'exposition</h6>
+                        <p class="small mb-0">Cette impression 3D est présentée pour illustrer notre savoir-faire technique. Elle n'est pas disponible à la vente immédiate.</p>
+                    </div>
+                {% endif %}
+                
+                <a href="{{ path('app_gallery') }}" class="btn btn-link text-decoration-none mt-4 p-0">
+                    <i class="fas fa-arrow-left me-2"></i> Retour à la galerie
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block partenaires %}{% endblock %}

@@ -28,7 +28,6 @@ class AccountController extends AbstractController
     }
 
     #[Route('/mon-compte/modifier-mdp', name: 'password')]
-    #[IsGranted('ROLE_USER')] 
     public function changePassword(
         Request $request, 
         UserPasswordHasherInterface $userPasswordHasher, 
