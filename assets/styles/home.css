@@ -40,6 +40,7 @@ img {
 
     transition: transform 0.4s ease, box-shadow 0.4s ease;
     will-change: transform;
+    text-decoration: none;
 }
 
 /* ---------- PANEL GAUCHE ---------- */

@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Galerie Impressions 3D - 3wolfdesign{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('styles/product.css') }}">
+{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+    <div class="text-center mb-5 page-title">
+        <h1 class="display-4 fw-bold">Galerie 3D</h1>
+        <p class="lead">Découvrez nos dernières réalisations et prototypes d'impression.</p>
+        <hr class="w-25 mx-auto text-primary" style="height: 3px;">
+    </div>
+
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
+        {% for produit in realisations %}
+            <div class="col">
+                <div class="card h-100 shadow-sm border-0 gallery-card position-relative">
+                    <div class="overflow-hidden rounded-top bg-light" style="height: 200px;">
+                        {% if produit.imgPath %}
+                            <img src="{{ asset('img/produits/3d/' ~ produit.imgPath) }}" 
+                                class="card-img-top img-hover" 
+                                alt="{{ produit.nom }}"
+                                style="object-fit: cover; height: 100%; width: 100%;">
+                        {% else %}
+                            <div class="d-flex align-items-center justify-content-center h-100">
+                                <i class="fas fa-image fa-3x text-muted"></i>
+                            </div>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="card-body">
+                        <h5 class="card-title fw-bold text-dark mb-1">
+                            <a href="{{ path('app_gallery_show', {id: produit.id}) }}" class="text-decoration-none text-dark stretched-link">
+                                {{ produit.nom }}
+                            </a>
+                        </h5>
+                        <p class="card-text text-muted small">{{ produit.description|slice(0, 60) }}...</p>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

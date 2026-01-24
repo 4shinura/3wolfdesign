@@ -9,7 +9,6 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Validator\Constraints\NotCompromisedPassword;
 use Symfony\Component\Validator\Constraints\PasswordStrength;
 
 class ChangePasswordFormType extends AbstractType
@@ -38,8 +37,8 @@ class ChangePasswordFormType extends AbstractType
 
                         // Force un mot de passe pas trop simple
                         new PasswordStrength(
-                            minScore: PasswordStrength::STRENGTH_MEDIUM,
-                            message: "Veuillez choisir un mot de pas plus complexe"
+                            minScore: PasswordStrength::STRENGTH_WEAK,
+                            message: "Veuillez choisir un mot de passe plus complexe"
                         ), 
                     ],
                     'label' => 'Nouveau mot de passe',

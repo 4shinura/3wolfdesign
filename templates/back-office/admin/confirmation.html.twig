@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Confirmation requise - 3wolfdesign{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card border-secondary shadow">
+                <div class="card-header bg-secondary text-white">
+                    <h3 class="card-title mb-0">⚠️ {{ actionTitle }}</h3>
+                </div>
+                <div class="card-body text-center">
+                    <p class="lead">Vous êtes sur le point de modifier le compte de :</p>
+                    <div class="alert alert-secondary">
+                        <strong>{{ targetUser.userIdentifier }}</strong> (ID: #{{ targetUser.id }})
+                    </div>
+                    
+                    <p class="text-muted">Par mesure de sécurité, veuillez confirmer votre mot de passe pour valider cette action.</p>
+
+                    <form method="post">
+                        <div class="mb-4">
+                            <input type="password" name="_password" id="inputPassword" class="form-control text-center" placeholder="Votre mot de passe" required autofocus>
+                        </div>
+
+                        <div class="d-flex justify-content-between">
+                            <a href="{{ path('app_admin_manage_users') }}" class="btn btn-outline-secondary">Annuler</a>
+                            <button class="btn btn-secondary" type="submit">
+                                Confirmer la modification
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block partenaires %}{% endblock %}

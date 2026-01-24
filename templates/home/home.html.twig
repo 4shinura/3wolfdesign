@@ -3,27 +3,27 @@
     <head>
         <meta charset="UTF-8">
         <title>Accueil - 3wolfdesign</title>
-        <link rel="icon" href="{{ asset('img/logo.ico') }}">
-        <link rel="stylesheet" href="{{ asset('styles/accueil.css') }}">
+        <link rel="icon" href="{{ asset('img/logo/logo.ico') }}">
+        <link rel="stylesheet" href="{{ asset('styles/home.css') }}">
     </head>
     <body>
         <!-- PANEL GAUCHE -->
-        <div class="side-panel panel-left">
-            <div class="panel-icon"><img src="{{ asset('img/freyja-logo.png') }}" alt="Logo Sur-Mesure"></div>
+        <a class="side-panel panel-left">
+            <div class="panel-icon"><img src="{{ asset('img/logo/freyja-logo.png') }}" alt="Logo Sur-Mesure"></div>
             <div class="panel-title">Sur Mesure</div>
             <div class="panel-description">
                 Découvrez nos kits d'aéromodèles prêts à assembler pour passionnés d'aviation et de modélisme
             </div>
-        </div>
+        </a>
 
         <!-- PANEL DROIT -->
-        <div class="side-panel panel-right">
-            <div class="panel-icon"><img src="{{ asset('img/louveto-logo.png') }}" alt="Logo Catalogue"></div>
+        <a class="side-panel panel-right" href="{{ path('app_gallery') }}">
+            <div class="panel-icon"><img src="{{ asset('img/logo/louveto-logo.png') }}" alt="Logo Catalogue"></div>
             <div class="panel-title">Catalogue</div>
             <div class="panel-description">
                 Services d'impression 3D sur mesure pour vos projets personnalisés et professionnels
             </div>
-        </div>
+        </a>
 
         <!-- CENTRE -->
         <div class="main-wrapper">
@@ -40,7 +40,7 @@
                         points="150,20 262.6,85 262.6,215 150,280 37.4,215 37.4,85"/>
                 </svg>
 
-                <img src="{{ asset('img/3wolfdesign-logo.png') }}" class="logo" alt="3WolfDesign">
+                <img src="{{ asset('img/logo/3wolfdesign-logo.png') }}" class="logo" alt="3WolfDesign">
             </div>
         </div>
     </body> 
