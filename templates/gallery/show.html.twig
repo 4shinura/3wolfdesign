@@ -12,10 +12,10 @@
     </nav>
 
     <div class="row g-5">
-        <div class="col-lg-8">
+        <div class="col-lg-6">
             <div class="product-image-container ">
-                {% if produit.imgPath %}
-                    <img src="{{ asset('img/produits/3d/' ~ produit.imgPath) }}" 
+                {% if produit.img_path %}
+                    <img src="{{ asset('img/produits/gallery/' ~ produit.img_path) }}" 
                          class="img-fluid w-100" 
                          alt="{{ produit.nom }}"
                          style="max-height: 500px; object-fit: contain;">
@@ -27,7 +27,7 @@
             </div>
         </div>
 
-        <div class="col-lg-4">
+        <div class="col-lg-6">
             <div class="sticky-top" style="top: 20px;">
                 <h1 class="display-5 fw-bold text-dark mb-3">{{ produit.nom }}</h1>
                 
@@ -38,8 +38,8 @@
                 </div>
 
                 <div class="description-box mb-5">
-                    <h5 class="fw-bold small text-secondary border-bottom pb-2 mb-3">Description</h5>
-                    <p class="text-muted lh-lg" style="white-space: pre-line;">
+                    <h5 class="fw-bold small text-secondary border-bottom pb-2">Description</h5>
+                    <p class="text-muted lh-lg">
                         {{ produit.description|default('Aucune description détaillée pour ce modèle.') }}
                     </p>
                 </div>
@@ -57,10 +57,26 @@
                 {% else %}
                     <div class="alert alert-info border-0 rounded-4 p-4">
                         <h6 class="fw-bold"><i class="fas fa-info-circle me-2"></i> Modèle d'exposition</h6>
-                        <p class="small mb-0">Cette impression 3D est présentée pour illustrer notre savoir-faire technique. Elle n'est pas disponible à la vente immédiate.</p>
+                        <p class="small mb-0">Cette impression 3D n'est pas disponible à la vente immédiate.</p>
                     </div>
                 {% endif %}
                 
+                {# Affichée uniquement pour l'admin #}
+                {% if is_granted('ROLE_ADMIN') %}
+                    <div class="d-flex justify-content-evenly">
+                        <a href="{{ path('app_admin_product_edit', {id: produit.id}) }}" class="btn btn-warning btn-sm">
+                            <i class="fas fa-edit"></i> Modifier
+                        </a>
+                            
+                        <form method="post" action="{{ path('app_admin_product_delete', {id: produit.id}) }}" onsubmit="return confirm('Es-tu sûr de vouloir supprimer cette réalisation ?');" style="display:inline-block;">
+                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ produit.id) }}">
+                            <button class="btn btn-danger btn-sm">
+                                <i class="fas fa-trash"></i> Supprimer
+                            </button>
+                        </form>
+                    </div>
+                {% endif %}
+
                 <a href="{{ path('app_gallery') }}" class="btn btn-link text-decoration-none mt-4 p-0">
                     <i class="fas fa-arrow-left me-2"></i> Retour à la galerie
                 </a>

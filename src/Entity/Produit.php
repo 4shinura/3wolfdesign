@@ -87,12 +87,12 @@ class Produit
         return $this;
     }
 
-    public function getImgPath(): ?string
+    public function getImg_path(): ?string
     {
         return $this->img_path;
     }
 
-    public function setImgPath(?string $img_path): static
+    public function setImg_path(?string $img_path): static
     {
         $this->img_path = $img_path;
 
