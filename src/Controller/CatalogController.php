@@ -8,22 +8,22 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-final class GalleryController extends AbstractController
+final class CatalogController extends AbstractController
 {
-    #[Route('/galerie', name: 'app_gallery')]
+    #[Route('/catalogue', name: 'app_catalog')]
     public function index(ProduitRepository $productRepository): Response
     {
-        $realisations = $productRepository->findBy(['categorie' => 1]);
+        $produits = $productRepository->findBy(['categorie' => 2]);
 
-        return $this->render('gallery/gallery.html.twig', [
-            'realisations' => $realisations,
+        return $this->render('catalog/catalog.html.twig', [
+            'produits' => $produits,
         ]);
     }
 
-    #[Route('/galerie/{id}', name: 'app_gallery_show')]
+    #[Route('/catalogue/{id}', name: 'app_catalog_show')]
     public function show(Produit $produit): Response
     {
-        return $this->render('gallery/show.html.twig', [
+        return $this->render('catalog/show.html.twig', [
             'produit' => $produit,
         ]);
     }

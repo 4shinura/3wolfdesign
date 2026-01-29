@@ -40,8 +40,8 @@
                 <img src="{{ asset('img/logo/3wolfdesign-logo.png') }}" class="nav-logo-img" alt="Logo">
                 <ul class="nav nav-links">
                     <li class="nav-item"><a href="{{ path('app_home') }}">Accueil</a></li>
-                    <li class="nav-item"><a href="{{ path('app_gallery') }}">Catalogue</a></li>
-                    <li class="nav-item"><a href="#">Sur Mesure</a></li>
+                    <li class="nav-item"><a href="{{ path('app_catalog') }}">Catalogue</a></li>
+                    <li class="nav-item"><a href="{{ path('app_gallery') }}">Galerie</a></li>
                     <li class="nav-item"><a href="{{ path('app_about') }}">À Propos</a></li>
                     <li class="nav-item"><a href="#">Partenaires & Clients</a></li>
                 </ul>
@@ -71,7 +71,7 @@
         <footer class="main-footer">
             {% block partenaires %}
             <div class="footer-partners">
-                <h2>Partenaires</h2>
+                <h2 class="page-title">Partenaires</h2>
                 <div class="partners-grid">
                     <div class="partner-card">
                         <img src="{{ asset('img/logo/logo-raf.png') }}" alt="Royal Air Frames">

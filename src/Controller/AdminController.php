@@ -75,7 +75,6 @@ class AdminController extends AbstractController
             $admin = $this->getUser();
             if ($passwordHasher->isPasswordValid($admin, $password)) {
                 
-                // Logique de switch de rôle
                 if (in_array('ROLE_ADMIN', $user->getRoles())) {
                     $user->setRoles([]);
                     $this->addFlash('success', "L'utilisateur a été rétrogradé.");
@@ -115,11 +114,13 @@ class AdminController extends AbstractController
                 $produit->setEstAchetable(false);
             }
 
+            $targetRoute = $produit->isEstAchetable() ? 'app_catalog' : 'app_gallery';
+
             $em->persist($produit);
             $em->flush();
 
             $this->addFlash('success', 'Ajout réussi !');
-            return $this->redirectToRoute('app_gallery');
+            return $this->redirectToRoute($targetRoute);
         }
 
         return $this->render('back-office/admin/product_form.html.twig', [
@@ -147,6 +148,10 @@ class AdminController extends AbstractController
             $em->flush(); 
 
             $this->addFlash('success', 'Mise à jour effectuée.');
+
+            if ($produit->isEstAchetable()) {
+                return $this->redirectToRoute('app_catalog_show', ['id' => $produit->getId()]);
+            }
             return $this->redirectToRoute('app_gallery_show', ['id' => $produit->getId()]);
         }
 
@@ -178,11 +183,12 @@ class AdminController extends AbstractController
 
     #[Route('/produit/supprimer/{id}', name: 'product_delete', methods: ['POST'])]
     public function deleteProduct(Produit $produit, Request $request, EntityManagerInterface $em): Response {
+        $targetRoute = $produit->isEstAchetable() ? 'app_catalog' : 'app_gallery';
         if ($this->isCsrfTokenValid('delete'.$produit->getId(), $request->request->get('_token'))) {
             $em->remove($produit);
             $em->flush();
             $this->addFlash('success', 'La réalisation a été supprimée.');
         }
-        return $this->redirectToRoute('app_gallery');
+        return $this->redirectToRoute($targetRoute);
     }
 }

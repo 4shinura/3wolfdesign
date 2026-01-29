@@ -157,6 +157,9 @@ header {
     font-family: "mostra-nuova", sans-serif;
     font-size: 36px;
     margin-bottom: 40px;
+    font-weight: 400;
+    text-align: center;
+    color: #000;
 }
 
 .partners-grid {
