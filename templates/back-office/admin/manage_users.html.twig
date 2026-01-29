@@ -13,7 +13,7 @@
                    value="{{ searchTerm }}" 
                    class="form-control" 
                    placeholder="Email ou #ID..." 
-                   style="border-top-right-radius: 0; border-bottom-right-radius: 0;">
+                   style="border-top-right-radius: 0; border-bottom-right-radius: 0; width: 35vh;">
             <button class="btn btn-dark" type="submit" style="border-top-left-radius: 0; border-bottom-left-radius: 0;">
                 🔍
             </button>
@@ -39,8 +39,11 @@
                     </td>
                     <td>
                         {% if user != app.user %}
-                        <a href="{{ path('app_admin_switch_role', {id: user.id}) }}" class="btn btn-sm btn-outline-dark">
+                        <a href="{{ path('app_admin_switch_role_user', {id: user.id}) }}" class="btn btn-sm btn-dark">
                             Changer le rang
+                        </a>
+                        <a href="{{ path('app_admin_delete_user', {id: user.id}) }}" class="btn btn-sm btn-outline-danger">
+                            Supprimer le compte
                         </a>
                         {% endif %}
                     </td>

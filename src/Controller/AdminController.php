@@ -61,7 +61,7 @@ class AdminController extends AbstractController
         ]);
     }
 
-    #[Route('/utilisateurs/changer-role/{id}', name: 'switch_role')]
+    #[Route('/utilisateurs/changer-role/{id}', name: 'switch_role_user')]
     public function confirmSwitchRole(
         Utilisateur $user, 
         Request $request, 
@@ -93,6 +93,42 @@ class AdminController extends AbstractController
         return $this->render('back-office/admin/confirmation.html.twig', [
             'targetUser' => $user,
             'actionTitle' => "Modification des droits"
+        ]);
+    }
+
+    #[Route('/utilisateurs/supprimer/{id}', name: 'delete_user')]
+    public function deleteUser(
+        Utilisateur $user, 
+        Request $request, 
+        UserPasswordHasherInterface $passwordHasher, 
+        EntityManagerInterface $em
+    ): Response {
+        if ($request->isMethod('POST')) {
+            $password = $request->request->get('_password');
+            
+            /** @var Utilisateur $admin */
+            $admin = $this->getUser();
+
+            if ($passwordHasher->isPasswordValid($admin, $password)) {
+                
+                if ($user === $admin) {
+                    $this->addFlash('danger', 'Vous ne pouvez pas supprimer votre propre compte.');
+                    return $this->redirectToRoute('app_admin_manage_users');
+                }
+
+                $em->remove($user);
+                $em->flush();
+
+                $this->addFlash('success', "Le compte de l'utilisateur a été supprimé définitivement.");
+                return $this->redirectToRoute('app_admin_manage_users');
+            }
+
+            $this->addFlash('danger', 'Mot de passe incorrect, suppression annulée.');
+        }
+
+        return $this->render('back-office/admin/confirmation.html.twig', [
+            'targetUser' => $user,
+            'actionTitle' => "Suppression de l'utilisateur"
         ]);
     }
 
