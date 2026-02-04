@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Utilisateur;
 use App\Entity\Produit;
 use App\Form\ProduitFormType;
+use App\Repository\ProduitRepository;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use App\Repository\UtilisateurRepository;
@@ -20,20 +21,12 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 #[IsGranted('ROLE_ADMIN')]
 class AdminController extends AbstractController
 {
-    private string $galleryDir;
-    private string $catalogDir;
-
-    public function __construct(string $gallery_directory, string $catalog_directory)
-    {
-        $this->galleryDir = $gallery_directory;
-        $this->catalogDir = $catalog_directory;
-    }
-
     #[Route('/dashboard', name: 'dashboard')]
-    public function index(UtilisateurRepository $userRepo): Response
+    public function index(UtilisateurRepository $userRepo, ProduitRepository $productRepo): Response
     {
         return $this->render('back-office/admin/dashboard.html.twig', [
             'totalUsers' => $userRepo->count([]),
+            'totalProducts' => $productRepo->count([])
         ]);
     }
 
@@ -132,6 +125,60 @@ class AdminController extends AbstractController
         ]);
     }
 
+    #[Route('/images', name: 'manage_images')]
+    public function maintenanceImages(ProduitRepository $repo): Response
+    {
+        $produits = $repo->findAll();
+        $imagesEnBdd = [];
+        foreach ($produits as $p) {
+            if ($p->getImg_path()) {
+                $imagesEnBdd[] = $p->getImg_path();
+            }
+        }
+
+        $directory = $this->getParameter('kernel.project_dir') . '/assets/img/produits';
+        $imagesInutilisees = [];
+        $totalImagesPhysiques = 0;
+
+        if (is_dir($directory)) {
+            $files = array_diff(scandir($directory), ['.', '..']);
+            
+            foreach ($files as $file) {
+                if (is_file($directory . '/' . $file)) {
+                    $totalImagesPhysiques++;
+                    
+                    if (!in_array($file, $imagesEnBdd)) {
+                        $imagesInutilisees[] = [
+                            'name' => $file,
+                            'path' => 'img/produits/' . $file,
+                            'full_path' => $directory . '/' . $file
+                        ];
+                    }
+                }
+            }
+        }
+
+        return $this->render('back-office/admin/manage_images.html.twig', [
+            'imagesInutilisees' => $imagesInutilisees,
+            'totalImages' => $totalImagesPhysiques
+        ]);
+    }
+
+    #[Route('/images/supprimer', name: 'delete_images', methods: ['POST'])]
+    public function deleteUnusedImages(Request $request): Response
+    {
+        $imagesToDelete = $request->request->all('images'); 
+
+        foreach ($imagesToDelete as $fullPath) {
+            if (file_exists($fullPath)) {
+                unlink($fullPath);
+            }
+        }
+
+        $this->addFlash('success', count($imagesToDelete) . ' images inutilisées ont été supprimées.');
+        return $this->redirectToRoute('app_admin_manage_images');
+    }
+
 
     #[Route('/produit/nouveau', name: 'product_new')]
     public function newProduct(Request $request, EntityManagerInterface $em): Response 
@@ -141,8 +188,7 @@ class AdminController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $targetDir = $produit->isEstAchetable() ? $this->catalogDir : $this->galleryDir;
-            $this->handleImageUpload($form, $produit, $targetDir);
+            $this->handleImageUpload($form, $produit);
 
             if ($produit->getCategorie()->getId() === 2) {
                 $produit->setEstAchetable(true);
@@ -172,14 +218,7 @@ class AdminController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $targetDir = $produit->isEstAchetable() ? $this->catalogDir : $this->galleryDir;
-            $this->handleImageUpload($form, $produit, $targetDir);
-        
-            if ($produit->getCategorie()->getId() === 2) {
-                $produit->setEstAchetable(true);
-            } else {
-                $produit->setEstAchetable(false);
-            }
+            $this->handleImageUpload($form, $produit);
 
             $em->flush(); 
 
@@ -201,16 +240,17 @@ class AdminController extends AbstractController
     /**
      * Méthode privée pour éviter de répéter le code d'upload
      */
-    private function handleImageUpload($form, Produit $produit, string $gallery_directory): void
+    private function handleImageUpload($form, Produit $produit): void
     {
         /** @var UploadedFile $imageFile */
         $imageFile = $form->get('img_path')->getData();
+        $imgDir = $this->getParameter('kernel.project_dir') . '/assets/img/produits';
 
         if ($imageFile) {
             $newFilename = uniqid().'.'.$imageFile->guessExtension();
 
             try {
-                $imageFile->move($gallery_directory, $newFilename);
+                $imageFile->move($imgDir, $newFilename);
                 $produit->setImg_path($newFilename);
             } catch (FileException $e) {
             }
@@ -220,8 +260,12 @@ class AdminController extends AbstractController
     #[Route('/produit/supprimer/{id}', name: 'product_delete', methods: ['POST'])]
     public function deleteProduct(Produit $produit, Request $request, EntityManagerInterface $em): Response {
         $targetRoute = $produit->isEstAchetable() ? 'app_catalog' : 'app_gallery';
+        $imgDir = $this->getParameter('kernel.project_dir') . '/assets/img/produits/';
         if ($this->isCsrfTokenValid('delete'.$produit->getId(), $request->request->get('_token'))) {
             $em->remove($produit);
+            if (file_exists($imgDir . $produit->getImg_path())) {
+                unlink($imgDir . $produit->getImg_path());
+            }
             $em->flush();
             $this->addFlash('success', 'La réalisation a été supprimée.');
         }

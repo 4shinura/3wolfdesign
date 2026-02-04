@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Gestion des images - 3wolfdesign{% endblock %}
+
+{% block body %}
+<div class="container py-5">
+    <div class="d-flex justify-content-between align-items-center mb-5">
+        <h1 class="fw-bold">Nettoyage des médias</h1>
+        <div class="text-end">
+            <span class="badge bg-dark px-3 py-2">Fichiers sur serveur : {{ totalImages }}</span>
+        </div>
+    </div>
+
+    {% if imagesInutilisees is empty %}
+        <div class="text-center py-5">
+            <i class="fas fa-check-circle fa-5x text-success mb-3"></i>
+            <h3>Votre serveur est propre !</h3>
+            <p class="text-muted">Toutes les images présentes sont liées à des produits.</p>
+            <a href="{{ path('app_admin_dashboard') }}" class="btn btn-secondary mt-3">Retour au Dashboard</a>
+        </div>
+    {% else %}
+        <div class="alert alert-warning border-0 shadow-sm d-flex align-items-center mb-4">
+            <i class="fas fa-exclamation-triangle fa-2x me-3"></i>
+            <div>
+                <strong>{{ imagesInutilisees|length }} images orphelines détectées.</strong><br>
+                Ces fichiers ne sont plus rattachés à aucun produit.
+            </div>
+        </div>
+
+        <form action="{{ path('app_admin_delete_images') }}" method="POST" onsubmit="return confirm('Confirmer la suppression définitive de ces images ?');">
+            <div class="row row-cols-2 row-cols-md-4 row-cols-lg-6 g-3 mb-5">
+                {% for img in imagesInutilisees %}
+                    <div class="col">
+                        <div class="card h-100 border-0 shadow-sm position-relative">
+                            <img src="{{ asset(img.path) }}" class="card-img-top rounded" style="height: 120px; object-fit: cover;">
+                            <input type="hidden" name="images[]" value="{{ img.full_path }}">
+                            <div class="card-body p-2 text-center">
+                                <code class="small text-muted" style="font-size: 0.7rem;">{{ img.name }}</code>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+
+            <div class="card bg-light border-0 p-4">
+                <div class="d-flex justify-content-between align-items-center">
+                    <a href="{{ path('app_admin_dashboard') }}" class="text-muted">Annuler l'opération</a>
+                    <button type="submit" class="btn btn-danger btn-lg px-5">
+                        <i class="fas fa-trash-alt me-2"></i>Supprimer les {{ imagesInutilisees|length }} fichiers
+                    </button>
+                </div>
+            </div>
+        </form>
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block partenaires %}{% endblock %}

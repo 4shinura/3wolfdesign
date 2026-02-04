@@ -21,3 +21,7 @@
 ###> vscode ###
 .vscode
 ###< vscode ###
+
+###> env/prod (private) ###
+/.env
+###< env/prod (private) ###

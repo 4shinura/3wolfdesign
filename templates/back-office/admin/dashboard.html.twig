@@ -7,8 +7,8 @@
     <h1 class="mb-4">Dashboard Administrateur</h1>
 
     <div class="row g-4">
-        {# Stats Utilisateurs #}
-        <div class="col-md-4">
+        {# Utilisateurs #}
+        <div class="col-md-3">
             <div class="card bg-dark text-white shadow">
                 <div class="card-body text-center">
                     <h5 class="card-title">Utilisateurs</h5>
@@ -18,19 +18,30 @@
             </div>
         </div>
 
-        {# Stats Produits (Exemple) #}
-        <div class="col-md-4">
+        {# Produits #}
+        <div class="col-md-3">
             <div class="card bg-primary text-white shadow">
                 <div class="card-body text-center">
                     <h5 class="card-title">Produits</h5>
-                    <p class="display-4">0</p> {# Tu remplaceras par ta variable plus tard #}
+                    <p class="display-4">{{ totalProducts }}</p> 
                     <button class="btn btn-outline-light btn-sm" disabled>Bientôt disponible</button>
                 </div>
             </div>
         </div>
 
-        {# Stats Commandes (Exemple) #}
-        <div class="col-md-4">
+        {# Nettoyage #}
+        <div class="col-md-3">
+            <div class="card bg-info text-dark shadow h-100">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Images</h5>
+                    <p class="display-4"><i class="fas fa-broom"></i></p>
+                    <a href="{{ path('app_admin_manage_images') }}" class="btn btn-outline-light btn-sm">Nettoyer images</a>
+                </div>
+            </div>
+        </div>
+
+        {# Commandes #}
+        <div class="col-md-3">
             <div class="card bg-success text-white shadow">
                 <div class="card-body text-center">
                     <h5 class="card-title">Ventes</h5>
