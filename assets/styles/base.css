@@ -1,3 +1,6 @@
+/* ==========================================================================
+   BASICS & RESET
+   ========================================================================== */
 * {
     margin: 0;
     padding: 0;
@@ -15,12 +18,12 @@ body {
 }
 
 .toast-container {
-    bottom: 100px !important; /* Ajuste la distance avec le bas */
+    bottom: 100px !important;
 }
 
 .page-title {
     font-weight: 400;
-    font-size: 48px;
+    font-size: clamp(32px, 8vw, 48px); /* Taille adaptative selon l'écran */
     text-align: center;
     margin-bottom: 50px;
     color: #000;
@@ -35,21 +38,15 @@ body {
     position: relative;
 }
 
-header {
-    z-index: 1000;         
-    position: sticky;     
-    top: 0;                
-    width: 100%;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.3);
-}
-
-/* --- Éléments de Décoration (Hexagones) --- */
+/* ==========================================================================
+   DÉCORATION (HEXAGONES)
+   ========================================================================== */
 .fixed-details-container {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
-    bottom: 0; /* S'étend sur toute la hauteur réelle du site */
+    bottom: 0;
     pointer-events: none;
     z-index: 0; 
     overflow: hidden;
@@ -61,35 +58,42 @@ header {
     filter: drop-shadow(0 0 8px rgba(0, 234, 255, 0.15));
 }
 
-/* Positions définies */
 .h-top-left { top: 150px; left: -40px; width: 200px; transform: rotate(15deg); }
 .h-mid-right { top: 30%; right: -30px; width: 150px; transform: rotate(-12deg); }
-.h-bottom-left { bottom: 550px; left: 0; width: 120px; transform: rotate(90deg);}
-.h-footer-overlap-1 { bottom: 200px; left: -50px; width: 280px; transform: rotate(45deg); }
-.h-footer-overlap-2 { bottom: 60px; right: 5%; width: 180px; transform: rotate(180deg); }
+
+/* Désactivation des hexagones encombrants sur mobile */
+@media (max-width: 768px) {
+    .detail-hexa { display: none; }
+}
 
 /* ==========================================================================
-   NAVIGATION
+   HEADER & NAVIGATION
    ========================================================================== */
+header {
+    z-index: 1050; 
+    position: sticky; 
+    top: 0; 
+    width: 100%;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+}
+
 .main-navbar {
     background-color: #4a4a4a;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    height: 7vh;
+    min-height: 7vh;
     padding: 0 30px;
 }
 
 .nav-logo-img { height: 5vh; }
 
+/* Adaptation des liens pour Bootstrap Navbar */
 .nav-links {
     list-style: none;
     display: flex;
-    gap: 12vh; 
+    gap: 5vw; /* Utilisation de vw pour plus de flexibilité */
 }
 
-.nav-links a {
-    color: white;
+.nav-links .nav-link {
+    color: white !important;
     text-decoration: none;
     font-family: "mostra-nuova", sans-serif;
     font-weight: 600;
@@ -98,8 +102,8 @@ header {
     transition: color 0.3s ease;
 }
 
-.nav-links a:hover, .contact-bar a:hover, .footer-center a:hover {
-    color: #00eaff;
+.nav-links .nav-link:hover {
+    color: #00eaff !important;
 }
 
 .nav-auth { display: flex; gap: 10px; }
@@ -111,10 +115,11 @@ header {
     border-radius: 4px;
     text-decoration: none;
     font-size: 14px;
+    display: inline-block;
 }
 
-.btn-login { background: white; color: black; }
-.btn-register { background: #00eaff; color: black; font-weight: 600; }
+.btn-login { background: white; color: black; font-weight: 600;}
+.btn-register { background: #00eaff; color: black; font-weight: 600;}
 
 .contact-bar {
     background-color: #7a7a7a;
@@ -127,7 +132,22 @@ header {
 }
 
 .contact-bar a { color: white; text-decoration: none; }
+.contact-bar a:hover { color: #00eaff; }
 
+/* Menu Burger Custom Style */
+.custom-toggler {
+    border: none !important;
+}
+.custom-toggler:focus {
+    box-shadow: none !important;
+}
+.custom-toggler .navbar-toggler-icon {
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(255, 255, 255, 1)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E") !important;
+}
+
+/* ==========================================================================
+   MAIN CONTENT
+   ========================================================================== */
 .content-center {
     flex: 1;
     display: flex;
@@ -138,6 +158,9 @@ header {
     z-index: 1; 
 }
 
+/* ==========================================================================
+   FOOTER & PARTNERS
+   ========================================================================== */
 .main-footer {
     background-color: transparent; 
     display: flex;
@@ -157,15 +180,12 @@ header {
     font-family: "mostra-nuova", sans-serif;
     font-size: 36px;
     margin-bottom: 40px;
-    font-weight: 400;
-    text-align: center;
-    color: #000;
 }
 
 .partners-grid {
     display: flex;
     justify-content: center;
-    gap: 50px;
+    gap: 30px;
     max-width: 1100px;
     margin: 0 auto;
 }
@@ -183,15 +203,79 @@ header {
 
 .footer-bottom-bar {
     background-color: #000;
-    height: 8vh;
-    padding: 0 30px;
+    min-height: 8vh;
+    padding: 20px 30px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     color: white;
-    font-size: 13px;
 }
 
-.footer-left, .footer-center, .footer-right { flex: 1; display: flex; font-size: medium;}
+.footer-left, .footer-center, .footer-right { flex: 1; display: flex; font-size: 14px; }
 .footer-center { justify-content: center; }
-.footer-center a { color: white; text-decoration: none; margin: 0 15px; font-weight: 600; }
+.footer-center a { color: white; text-decoration: none; margin: 0 15px; font-weight: 600; transition: color 0.3s; }
+.footer-center a:hover { color: #00eaff; }
+
+/* ==========================================================================
+   MEDIA QUERIES (RESPONSIVE)
+   ========================================================================== */
+
+/* Tablettes et Mobile (Menu Burger) */
+@media (max-width: 991px) {
+    .main-navbar {
+        height: auto;
+        padding: 15px 20px;
+    }
+
+    .navbar-collapse {
+        background-color: #4a4a4a;
+        margin: 10px -20px -15px -20px; /* Aligné avec les bords */
+        padding: 30px;
+        border-top: 1px solid #5a5a5a;
+    }
+
+    .nav-links {
+        flex-direction: column;
+        gap: 20px;
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+    .nav-auth {
+        flex-direction: row;
+        width: 100%;
+    }
+
+    .btn-login, .btn-register {
+        width: 100%;
+        text-align: center;
+    }
+}
+
+/* Mobile uniquement */
+@media (max-width: 768px) {
+    .contact-bar {
+        flex-direction: column;
+        text-align: center;
+        gap: 10px;
+    }
+
+    .partners-grid {
+        flex-direction: column;
+    }
+
+    .footer-bottom-bar {
+        flex-direction: column;
+        gap: 20px;
+        text-align: center;
+    }
+
+    .footer-center {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .footer-left, .footer-right {
+        justify-content: center;
+    }
+}
