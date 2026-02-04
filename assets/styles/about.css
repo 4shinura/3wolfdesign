@@ -1,7 +1,9 @@
+/* ---------- CONTENEUR PRINCIPAL ---------- */
 .about-container {
     max-width: 70%;
     margin: 50px auto;
     padding: 0 20px;
+    transition: max-width 0.3s ease;
 }
 
 /* ---------- SECTION HISTOIRE (PLEINE LARGEUR) ---------- */
@@ -12,7 +14,7 @@
     border-radius: 12px;
     padding: 50px;
     box-shadow: 0 4px 20px rgba(0,0,0,0.05);
-    margin-bottom: 30px; /* Espace avant les cartes du bas */
+    margin-bottom: 30px;
 }
 
 .card-main-title {
@@ -24,14 +26,14 @@
 
 .history-card article h3 {
     font-family: 'Josefin Sans', sans-serif;
-    font-weight: 600; /* Semibold selon charte */
+    font-weight: 600;
     font-size: 18px;
     margin-bottom: 12px;
 }
 
 .history-card article p {
     font-family: 'Josefin Sans', sans-serif;
-    font-weight: 300; /* Light selon charte */
+    font-weight: 300;
     font-size: 15px;
     line-height: 1.7;
     color: #333;
@@ -46,7 +48,7 @@
 }
 
 .info-card {
-    flex: 1; /* Chaque carte prend 50% de la ligne */
+    flex: 1;
     background: #fff;
     border: 1px solid #eee;
     border-radius: 12px;
@@ -88,7 +90,7 @@
 /* ---------- RÉSEAUX SOCIAUX ---------- */
 .social-links {
     display: flex;
-    gap: 15px; /* Aligne les icônes horizontalement */
+    gap: 15px;
     margin-top: 10px;
 }
 
@@ -108,4 +110,51 @@
 .social-item:hover {
     background: #00eaff;
     transform: translateY(-3px);
+}
+
+/* ==========================================================================
+   MEDIA QUERIES (RESPONSIVE)
+   ========================================================================== */
+
+/* Tablettes (iPad, etc.) */
+@media (max-width: 1024px) {
+    .about-container {
+        max-width: 90%;
+    }
+}
+
+/* Mobiles (Smartphones) */
+@media (max-width: 768px) {
+    .about-container {
+        max-width: 95%;
+        margin: 20px auto;
+    }
+
+    .history-card {
+        padding: 30px 20px; /* Moins de padding interne sur petit écran */
+    }
+
+    .card-main-title {
+        font-size: 26px;
+    }
+
+    .history-card article p {
+        text-align: left; /* La justification est souvent moins lisible sur mobile */
+        font-size: 14px;
+    }
+
+    .info-row {
+        flex-direction: column; /* Empilage vertical des cartes contact/réseaux */
+        gap: 20px;
+    }
+
+    .social-links {
+        flex-direction: column; /* Empilage des boutons réseaux */
+        width: 100%;
+    }
+
+    .social-item {
+        justify-content: center;
+        width: 100%;
+    }
 }

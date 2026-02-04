@@ -36,29 +36,39 @@
             <img src="{{ asset('img/deco/hexa-2.png') }}" class="detail-hexa h-mid-right" alt="">
         </div>
         <header>
-            <nav class="main-navbar d-flex align-items-center">
-                <img src="{{ asset('img/logo/3wolfdesign-logo.png') }}" class="nav-logo-img" alt="Logo">
-                <ul class="nav nav-links">
-                    <li class="nav-item"><a href="{{ path('app_home') }}">Accueil</a></li>
-                    <li class="nav-item"><a href="{{ path('app_gallery') }}">Catalogue</a></li>
-                    <li class="nav-item"><a href="#">Sur Mesure</a></li>
-                    <li class="nav-item"><a href="{{ path('app_about') }}">À Propos</a></li>
-                    <li class="nav-item"><a href="#">Partenaires & Clients</a></li>
-                </ul>
-                {% if app.user == false %}
-                <div class="nav-auth">
-                    <a href="{{ path('app_login') }}" class="btn-login">Connexion</a>
-                    <a href="{{ path('app_register') }}" class="btn-register">Inscription</a>
+            <nav class="navbar navbar-expand-lg main-navbar">
+                <div class="container-fluid p-0">
+                    <a class="navbar-brand" href="{{ path('app_home') }}">
+                        <img src="{{ asset('img/logo/3wolfdesign-logo.png') }}" class="nav-logo-img" alt="Logo">
+                    </a>
+
+                    <button class="navbar-toggler custom-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar" aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+
+                    <div class="collapse navbar-collapse" id="mainNavbar">
+                        <ul class="navbar-nav mx-auto nav-links">
+                            <li class="nav-item"><a class="nav-link" href="{{ path('app_home') }}">Accueil</a></li>
+                            <li class="nav-item"><a class="nav-link" href="{{ path('app_catalog') }}">Catalogue</a></li>
+                            <li class="nav-item"><a class="nav-link" href="{{ path('app_gallery') }}">Galerie</a></li>
+                            <li class="nav-item"><a class="nav-link" href="{{ path('app_about') }}">À Propos</a></li>
+                            <li class="nav-item"><a class="nav-link" href="#">Partenaires</a></li>
+                        </ul>
+                        
+                        <div class="nav-auth d-flex align-items-center">
+                            {% if not app.user %}
+                                <a href="{{ path('app_login') }}" class="btn-login me-2">Connexion</a>
+                                <a href="{{ path('app_register') }}" class="btn-register">Inscription</a>
+                            {% else %}
+                                <a href="{{ path('app_logout') }}" class="btn-login me-2">Déconnexion</a>
+                                <a href="{{ path('app_user_account') }}" class="btn-register">Mon Compte</a>
+                            {% endif %}
+                        </div>
+                    </div>
                 </div>
-                {% else %}
-                <div class="nav-auth">
-                    <a href="{{ path('app_logout') }}" class="btn-login">Déconnexion</a>
-                    <a href="{{ path('app_user_account') }}" class="btn-register">Mon Compte</a>
-                </div>
-                {% endif %}
             </nav>
-           
-            <div class="contact-bar">
+
+            <div class="contact-bar d-none d-md-flex">
                 <span>📩 Contactez-nous : 3wolfdesign@gmail.com</span>
                 <a href="{{ path('app_legal_contact') }}">Formulaire de Contact</a>
             </div>
@@ -71,7 +81,7 @@
         <footer class="main-footer">
             {% block partenaires %}
             <div class="footer-partners">
-                <h2>Partenaires</h2>
+                <h2 class="page-title">Partenaires</h2>
                 <div class="partners-grid">
                     <div class="partner-card">
                         <img src="{{ asset('img/logo/logo-raf.png') }}" alt="Royal Air Frames">

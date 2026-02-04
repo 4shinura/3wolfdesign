@@ -19,6 +19,12 @@ class ProduitFormType extends AbstractType
             ->add('nom')
             ->add('description')
             ->add('prix')
+            ->add('estAchetable')
+            ->add('categorie', EntityType::class, [
+                'class' => Categorie::class,
+                'choice_label' => 'titre',
+                'label' => 'Catégorie'
+            ])
             ->add('img_path', FileType::class, [
                 'label' => 'Photo de la réalisation',
                 'mapped' => false,
@@ -30,11 +36,6 @@ class ProduitFormType extends AbstractType
                         mimeTypesMessage: 'Veuillez uploader un format valide (JPG/PNG)'
                     )
                 ],
-            ])
-            ->add('categorie', EntityType::class, [
-                'class' => Categorie::class,
-                'choice_label' => 'titre',
-                'label' => 'Catégorie'
             ])
         ;
     }

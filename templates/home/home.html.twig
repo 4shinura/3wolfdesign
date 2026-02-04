@@ -8,18 +8,18 @@
     </head>
     <body>
         <!-- PANEL GAUCHE -->
-        <a class="side-panel panel-left">
-            <div class="panel-icon"><img src="{{ asset('img/logo/freyja-logo.png') }}" alt="Logo Sur-Mesure"></div>
-            <div class="panel-title">Sur Mesure</div>
+        <a class="side-panel panel-left" href="{{ path('app_catalog') }}">
+            <div class="panel-icon"><img src="{{ asset('img/logo/freyja-logo.png') }}" alt="Logo Catalogue"></div>
+            <div class="panel-title">Catalogue</div>
             <div class="panel-description">
-                Découvrez nos kits d'aéromodèles prêts à assembler pour passionnés d'aviation et de modélisme
+                Découvrez nos kits d'aéromodèles pour passionnés d'aviation et de modélisme
             </div>
         </a>
 
         <!-- PANEL DROIT -->
         <a class="side-panel panel-right" href="{{ path('app_gallery') }}">
-            <div class="panel-icon"><img src="{{ asset('img/logo/louveto-logo.png') }}" alt="Logo Catalogue"></div>
-            <div class="panel-title">Catalogue</div>
+            <div class="panel-icon"><img src="{{ asset('img/logo/louveto-logo.png') }}" alt="Logo Galerie"></div>
+            <div class="panel-title">Galerie</div>
             <div class="panel-description">
                 Services d'impression 3D sur mesure pour vos projets personnalisés et professionnels
             </div>
