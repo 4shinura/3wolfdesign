@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Commande;
 use App\Form\ChangePasswordFormType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -24,6 +25,23 @@ class AccountController extends AbstractController
 
         return $this->render('back-office/user/account.html.twig', [
             'user' => $user,
+        ]);
+    }
+
+    #[Route('/mon-compte/mes-commandes', name: 'orders')]
+    public function orders(EntityManagerInterface $em): Response
+    {
+        /** @var Utilisateur $user */
+        $user = $this->getUser();
+
+        // On récupère ses commandes triées par date
+        $commandes = $em->getRepository(Commande::class)->findBy(
+            ['utilisateur' => $user],
+            ['dateCreation' => 'DESC']
+        );
+
+        return $this->render('back-office/user/orders.html.twig', [
+            'commandes' => $commandes,
         ]);
     }
 

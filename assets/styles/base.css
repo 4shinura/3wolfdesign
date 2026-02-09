@@ -145,6 +145,25 @@ header {
     background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(255, 255, 255, 1)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E") !important;
 }
 
+.nav-cart-link {
+    margin-top: 5px;
+    font-size: 1.6rem;
+    color: #ffffff;
+    position: relative;
+    transition: transform 0.2s;
+}
+.nav-cart-link:hover {
+    transform: scale(1.1);
+    color: #00eaff;
+}
+.cart-count-badge {
+    position: absolute;
+    top: -5px;
+    right: -10px;
+    font-size: 0.65rem;
+    padding: 0.35em 0.6em;
+}
+
 /* ==========================================================================
    MAIN CONTENT
    ========================================================================== */

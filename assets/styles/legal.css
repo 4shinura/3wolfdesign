@@ -105,3 +105,40 @@
 .btn-submit:hover {
     background-color: #333;
 }
+
+
+/* Media Queries pour Tablettes et Mobiles */
+@media (max-width: 1024px) {
+    .legal-container, .contact-container {
+        width: 90%; /* On élargit le contenu sur tablette */
+        max-width: 100%;
+        margin: 40px auto;
+    }
+}
+
+@media (max-width: 768px) {
+    .legal-container, .contact-container {
+        width: 95%;
+        margin: 20px auto;
+    }
+
+    .legal-content {
+        padding: 30px 20px; /* On réduit le padding interne trop large */
+    }
+
+    .page-title {
+        font-size: 24px;
+        margin-bottom: 30px;
+    }
+
+    /* Formulaire de contact en colonne sur mobile */
+    .form-row {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .legal-section p {
+        text-align: left; /* La justification est souvent laide sur petit écran */
+        font-size: 15px;
+    }
+}

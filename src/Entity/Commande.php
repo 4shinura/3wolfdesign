@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: CommandeRepository::class)]
+#[ORM\HasLifecycleCallbacks] 
 class Commande
 {
     #[ORM\Id]
@@ -18,11 +19,14 @@ class Commande
     #[ORM\Column(length: 255)]
     private ?string $reference = null;
 
-    #[ORM\Column]
+    #[ORM\Column(name: "prix_total")]
     private ?float $prix_total = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $status = null;
+
+    #[ORM\Column(name: "date_creation", type: "datetime_immutable")]
+    private ?\DateTimeImmutable $dateCreation = null;
 
     /**
      * @var Collection<int, DetailsCommande>
@@ -78,6 +82,17 @@ class Commande
         $this->status = $status;
 
         return $this;
+    }
+
+    #[ORM\PrePersist] // Code exécuter automatiquement avant un INSERT en SQL
+    public function setDateCreation(): void
+    {
+        $this->dateCreation = new \DateTimeImmutable();
+    }
+
+    public function getDateCreation(): ?\DateTimeImmutable
+    {
+        return $this->dateCreation;
     }
 
     /**

@@ -58,7 +58,7 @@
                         </div>
 
                         <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-5">
-                            <a href="{{ path('app_gallery') }}" class="btn btn-light btn-lg px-4 me-md-2">Annuler</a>
+                            <a href="javascript:history.back()" class="btn btn-light btn-lg px-4 me-md-2">Annuler</a>
                             <button type="submit" class="btn btn-primary btn-lg px-5 shadow">
                                 <i class="fas fa-save me-2"></i>Enregistrer
                             </button>
@@ -80,3 +80,5 @@
     .border-dashed { border-style: dashed !important; }
 </style>
 {% endblock %}
+
+{% block partenaires %}{% endblock %}

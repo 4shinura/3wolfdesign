@@ -8,7 +8,7 @@
 
     <div class="row g-4">
         {# Utilisateurs #}
-        <div class="col-md-3">
+        <div class="col-md-4">
             <div class="card bg-dark text-white shadow">
                 <div class="card-body text-center">
                     <h5 class="card-title">Utilisateurs</h5>
@@ -19,37 +19,50 @@
         </div>
 
         {# Produits #}
-        <div class="col-md-3">
+        <div class="col-md-4">
             <div class="card bg-primary text-white shadow">
                 <div class="card-body text-center">
                     <h5 class="card-title">Produits</h5>
                     <p class="display-4">{{ totalProducts }}</p> 
-                    <button class="btn btn-outline-light btn-sm" disabled>Bientôt disponible</button>
+                    <a href="{{ path('app_admin_manage_products') }}" class="btn btn-outline-light btn-sm">Gérer les produits</a>
                 </div>
             </div>
         </div>
 
         {# Nettoyage #}
-        <div class="col-md-3">
-            <div class="card bg-info text-dark shadow h-100">
+        <div class="col-md-4">
+            <div class="card bg-info text-white shadow h-100">
                 <div class="card-body text-center">
                     <h5 class="card-title">Images</h5>
-                    <p class="display-4"><i class="fas fa-broom"></i></p>
-                    <a href="{{ path('app_admin_manage_images') }}" class="btn btn-outline-light btn-sm">Nettoyer images</a>
+                    <p class="display-5"><i class="fas fa-broom"></i></p>
+                    <a href="{{ path('app_admin_manage_images') }}" class="btn btn-outline-light btn-sm">Gérer les images</a>
                 </div>
             </div>
         </div>
 
         {# Commandes #}
-        <div class="col-md-3">
+        <div class="col-md-4">
             <div class="card bg-success text-white shadow">
                 <div class="card-body text-center">
-                    <h5 class="card-title">Ventes</h5>
-                    <p class="display-4">0€</p>
-                    <button class="btn btn-outline-light btn-sm" disabled>Voir les ventes</button>
+                    <h5 class="card-title">Commandes</h5>
+                    <p class="display-4">{{ totalCommandes }}</p>
+                    <a href="{{ path('app_admin_manage_sales') }}" class="btn btn-outline-light btn-sm">Voir toutes les commandes</a>
                 </div>
             </div>
         </div>
+
+        {# Commandes à traiter #}
+        {% if pendingOrders > 0 %}
+        <div class="col-md-4">
+            <div class="card {{ pendingOrders > 0 ? 'bg-warning' : 'bg-light' }} text-white shadow">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Commandes à traiter</h6>
+                    <p class="display-4">{{ pendingOrders }}</p>
+                    <a href="{{ path('app_admin_manage_sales', { 'status': 'Payée', 'sortBy': 'dateCreation', 'order': 'ASC' }) }}" class="btn btn-outline-light btn-sm">Voir les commandes en attente</a>
+                </div>
+            </div>
+        </div>
+        {% endif %}
     </div>
 </div>
 {% endblock %}

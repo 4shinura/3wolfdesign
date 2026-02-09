@@ -21,7 +21,9 @@
         {% endfor %}
     {% endfor %}
 
+
     <div class="row g-4">
+
         {# Carte : Commande #}
         <div class="col-md-6">
             <div class="card h-100 shadow-sm border-0">
@@ -33,7 +35,7 @@
                         <h5 class="card-title mb-0">Mes Commandes</h5>
                     </div>
                     <p class="card-text text-muted">Consultez l'historique de vos achats et suivez vos colis en cours.</p>
-                    <button class="btn btn-outline-dark w-100" disabled>Bientôt disponible</button>
+                    <a href="{{ path('app_user_orders') }}" class="btn btn-outline-dark w-100">Voir mes Commandes</a>
                 </div>
             </div>
         </div>
@@ -53,6 +55,7 @@
                 </div>
             </div>
         </div>
+        
     </div>
 
     <br>
