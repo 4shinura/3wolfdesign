@@ -24,4 +24,5 @@
 
 ###> env/prod (private) ###
 /.env
+/.env.local
 ###< env/prod (private) ###
