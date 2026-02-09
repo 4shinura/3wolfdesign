@@ -44,9 +44,17 @@
                 </div>
 
                 <div class="d-grid gap-2 mb-5">
-                    <a href="{{ path('app_legal_contact') }}" class="btn btn-dark btn-lg shadow-sm">
-                        <i class="fas fa-envelope me-2"></i>Commander
-                    </a>
+                    {% if produit.prix is not null and produit.prix > 0 %}
+                        {# Produit achetable #}
+                        <a href="{{ path('app_cart_add', {id: produit.id}) }}" class="btn btn-dark btn-lg shadow-sm">
+                            <i class="fas fa-cart-plus me-2"></i>Ajouter au panier
+                        </a>
+                    {% else %}
+                        {# Produit sur devis ou prix nul #}
+                        <a href="{{ path('app_legal_contact') }}" class="btn btn-outline-dark btn-lg shadow-sm">
+                            <i class="fas fa-envelope me-2"></i>Demander un devis
+                        </a>
+                    {% endif %}
                 </div>
 
                 {# Bloc Admin #}

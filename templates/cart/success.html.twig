@@ -1,0 +1,84 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Confirmation de commande - #{{ commande.id }}{% endblock %}
+
+{% block body %}
+<div class="container my-5 py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
+                <div class="card-body p-4 p-md-5">
+                    
+                    <div class="text-center mb-5">
+                        <div class="mb-3">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" fill="currentColor" class="bi bi-check2-circle text-success" viewBox="0 0 16 16">
+                                <path d="M2.5 8a5.5 5.5 0 0 1 8.25-4.764.5.5 0 0 0 .5-.866A6.5 6.5 0 1 0 14.5 8a.5.5 0 0 0-1 0 5.5 5.5 0 1 1-11 0z"/>
+                                <path d="M15.354 3.354a.5.5 0 0 0-.708-.708L8 9.293 5.354 6.646a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l7-7z"/>
+                            </svg>
+                        </div>
+                        <h1 class="h3 fw-light text-uppercase tracking-wider">Commande Confirmée</h1>
+                        <p class="text-muted small">Réf. {{ commande.reference }}</p>
+                    </div>
+
+                    <div class="row g-4 mb-5">
+                        <div class="col-md-6 border-end">
+                            <h2 class="h6 fw-bold text-uppercase mb-3">Merci</h2>
+                            <p class="text-muted small">
+                                Votre commande est en cours de préparation. Un e-mail contenant votre facture et le suivi d'expédition vient de vous être envoyé.
+                            </p>
+                        </div>
+                        <div class="col-md-6 ps-md-4">
+                            <h2 class="h6 fw-bold text-uppercase mb-3">Résumé</h2>
+                            <ul class="list-unstyled small mb-0">
+                                <li class="d-flex justify-content-between mb-2">
+                                    <span class="text-muted">Date :</span>
+                                    <span>{{ commande.dateCreation|date('d/m/Y') }}</span>
+                                </li>
+                                <li class="d-flex justify-content-between">
+                                    <span class="text-muted">Total :</span>
+                                    <span class="fw-bold text-primary">{{ commande.prixTotal|number_format(2, ',', ' ') }} €</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="bg-light p-4 rounded-3 mb-5">
+                        <h2 class="h6 fw-bold text-uppercase mb-3">Articles commandés</h2>
+                        <div class="table-responsive">
+                            <table class="table table-borderless table-sm mb-0">
+                                <tbody class="small">
+                                    {% for detail in commande.detailsCommande %}
+                                        <tr>
+                                            <td class="py-2">{{ detail.produit.nom }} <span class="text-muted">x{{ detail.quantite }}</span></td>
+                                            <td class="py-2 text-end">{{ (detail.prixAchat * detail.quantite)|number_format(2, ',', ' ') }} €</td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="text-center">
+                        <a href="{{ path('app_catalog') }}" class="btn btn-dark px-5 py-2 rounded-0 text-uppercase tracking-tighter shadow-sm">
+                            Continuer la navigation
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    body { background-color: #f8f9fa; }
+    .tracking-wider { letter-spacing: 0.15em; }
+    .tracking-tighter { letter-spacing: 0.05em; font-size: 0.85rem; }
+    .card { border: none !important; }
+    .text-primary { color: #2c3e50 !important; } /* Un bleu/gris sombre fait plus pro que le bleu bootstrap */
+    .btn-dark { background-color: #1a1a1a; border: none; transition: all 0.3s; }
+    .btn-dark:hover { background-color: #333; transform: translateY(-1px); }
+</style>
+{% endblock %}
+
+{% block partenaires %}{% endblock %}

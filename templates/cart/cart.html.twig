@@ -1,0 +1,137 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon Panier - 3wolfdesign{% endblock %}
+
+{% block body %}
+<div class="container">
+    <h1 class="page-title fw-bold">Panier</h1>
+
+    {% if items | length > 0 %}
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="card border-0 shadow-sm p-3 p-md-4 rounded-4">
+                    {# --- Version Tablettes et PC) --- #}
+                    <div class="d-none d-md-block">
+                        <table class="table align-middle">
+                            <thead>
+                                <tr>
+                                    <th>Produit</th>
+                                    <th>Prix</th>
+                                    <th>Quantité</th>
+                                    <th>Total</th>
+                                    <th class="text-end">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for item in items %}
+                                    <tr>
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                {% if item.produit.img_path %}
+                                                <img src="{{ asset('img/produits/' ~ item.produit.img_path) }}" 
+                                                    alt="{{ item.produit.nom }}" 
+                                                    class="rounded me-3" 
+                                                    style="width: 60px; height: 60px; object-fit: cover;">                 
+                                                {% else %}
+                                                    <i class="fas fa-image fa-4x rounded-3 me-3 text-muted"> </i>
+                                                {% endif %}
+                                                <span class="fw-bold">{{ item.produit.nom }}</span>
+                                            </div>
+                                        </td>
+                                        <td>{{ item.produit.prix|number_format(2, ',', ' ') }} €</td>
+                                        <td>
+                                            <div class="d-flex align-items-center gap-2">
+                                                <a href="{{ path('app_cart_decrease', {id: item.produit.id}) }}" class="btn btn-sm btn-outline-dark"><i class="fas fa-minus"></i></a>
+                                                <span class="fw-bold">{{ item.quantite }}</span>
+                                                <a href="{{ path('app_cart_add', {id: item.produit.id}) }}" class="btn btn-sm btn-outline-dark"><i class="fas fa-plus"></i></a>
+                                            </div>
+                                        </td>
+                                        <td>{{ (item.produit.prix * item.quantite)|number_format(2, ',', ' ') }} €</td>
+                                        <td class="text-end">
+                                            <a href="{{ path('app_cart_remove', {id: item.produit.id}) }}" class="text-danger"><i class="fas fa-trash-alt"></i></a>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+
+                    {# --- Version Mobile uniquement --- #}
+                    <div class="d-block d-md-none">
+                        {% for item in items %}
+                            <div class="cart-mobile-item border-bottom py-3">
+                                <div class="d-flex align-items-center mb-3">
+                                    <img src="{{ asset('img/produits/' ~ item.produit.img_path) }}" class="rounded me-3" style="width: 80px; height: 80px; object-fit: cover;">
+                                    <div>
+                                        <h6 class="fw-bold mb-1">{{ item.produit.nom }}</h6>
+                                        <p class="text-muted mb-0">{{ item.produit.prix|number_format(2, ',', ' ') }} €</p>
+                                    </div>
+                                    <a href="{{ path('app_cart_remove', {id: item.produit.id}) }}" class="ms-auto text-danger px-2">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </a>
+                                </div>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="d-flex align-items-center gap-3">
+                                        <a href="{{ path('app_cart_decrease', {id: item.produit.id}) }}" class="btn btn-outline-dark rounded-circle btn-sm shadow-sm" style="width:32px; height:32px;">-</a>
+                                        <span class="fw-bold fs-5">{{ item.quantite }}</span>
+                                        <a href="{{ path('app_cart_add', {id: item.produit.id}) }}" class="btn btn-outline-dark rounded-circle btn-sm shadow-sm" style="width:32px; height:32px;">+</a>
+                                    </div>
+                                    <div class="text-end">
+                                        <small class="text-muted d-block">Total ligne</small>
+                                        <span class="fw-bold fs-5">{{ (item.produit.prix * item.quantite)|number_format(2, ',', ' ') }} €</span>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4">
+                <div class="card border-0 shadow-sm p-4 rounded-4 bg-light">
+                    <h4 class="fw-bold mb-4">Récapitulatif</h4>
+                    <div class="d-flex justify-content-between mb-3">
+                        <span>Sous-total</span>
+                        <strong>{{ total|number_format(2, ',', ' ') }} €</strong>
+                    </div>
+                    <div class="d-flex justify-content-between mb-4">
+                        <span>Livraison</span>
+                        <span class="text-success">Offerte</span>
+                    </div>
+                    <hr>
+                    <div class="d-flex justify-content-between mb-4">
+                        <span class="h5">Total</span>
+                        <span class="h5 fw-bold">{{ total|number_format(2, ',', ' ') }} €</span>
+                    </div>
+
+                    {# Zone Payement - CGV #}
+                    <div class="form-check mb-3">
+                        <input class="form-check-input" type="checkbox" id="agree-cgv">
+                        <label class="form-check-label" for="agree-cgv">
+                            J'accepte les <a href="/cgv" target="_blank">Conditions Générales de Vente</a>
+                        </label>
+                    </div>
+
+                    {# On entoure le container PayPal d'une div désactivée #}
+                    <div id="paypal-wrapper" style="pointer-events: none; opacity: 0.5;">
+                        <div id="paypal-button-container"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <div class="text-center">
+            <i class="fas fa-shopping-basket fa-4x text-info mb-4"></i>
+            <h3>Votre panier est vide...</h3>
+            <a href="{{ path('app_catalog') }}" class="btn btn-dark mt-3 px-5 rounded-pill">Découvrir le catalogue</a>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block javascripts %} 
+<script src="https://www.paypal.com/sdk/js?client-id={{ paypal_client_id }}&currency=EUR&locale=fr_FR&disable-funding=venmo,paylater,credit" data-sdk-integration-source="developer-studio"></script>
+<script src="{{ asset('js/paypal-handler.js') }}"></script>
+{% endblock %}
+
+{% block partenaires %}{% endblock %}

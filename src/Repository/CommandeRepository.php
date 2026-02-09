@@ -16,28 +16,72 @@ class CommandeRepository extends ServiceEntityRepository
         parent::__construct($registry, Commande::class);
     }
 
-    //    /**
-    //     * @return Commande[] Returns an array of Commande objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('c')
-    //            ->andWhere('c.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('c.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
+    public function countOrders(): int
+    {
+        return (int) $this->createQueryBuilder('c')
+            ->select('COUNT(c.id)')
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
 
-    //    public function findOneBySomeField($value): ?Commande
-    //    {
-    //        return $this->createQueryBuilder('c')
-    //            ->andWhere('c.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
+    public function countPendingOrders(): int
+    {
+        return (int) $this->createQueryBuilder('c')
+            ->select('COUNT(c.id)')
+            ->where('c.status != :status OR c.status IS NULL') // Sécurité si le statut est null
+            ->setParameter('status', 'Terminé')
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+
+    public function getTotalSales(): float
+    {
+        $result = $this->createQueryBuilder('c')
+            ->select('SUM(c.prix_total)')
+            ->getQuery()
+            ->getSingleScalarResult();
+
+        return (float) ($result ?? 0);
+    }
+
+    public function getTotalSalesThisMonth(): float
+    {
+        $startOfMonth = new \DateTime('first day of this month 00:00:00');
+
+        $result = $this->createQueryBuilder('c')
+            ->select('SUM(c.prix_total)')
+            ->where('c.dateCreation >= :start')
+            ->setParameter('start', $startOfMonth)
+            ->getQuery()
+            ->getSingleScalarResult();
+
+        return (float)($result ?? 0);
+    }
+
+    public function findAllWithDetails(?string $search = null, ?string $status = null, string $sortBy = 'dateCreation', string $order = 'ASC'): array
+    {
+        $query = $this->createQueryBuilder('c')
+            ->leftJoin('c.details_commande', 'd') 
+            ->addSelect('d');
+
+        if ($search) {
+            $query->andWhere('c.reference LIKE :search')
+                ->setParameter('search', '%' . $search . '%');
+        }
+
+        if ($status && $status !== 'tous') {
+        $query->andWhere('c.status = :stat')
+              ->setParameter('stat', $status);
+        }   
+
+        // Tri dynamique
+        $allowedSorts = ['dateCreation', 'status', 'prix_total']; // Utilisation de $sortBy passée en paramètre
+        if (in_array($sortBy, $allowedSorts)) {
+            $query->orderBy('c.' . $sortBy, ($order === 'DESC') ? 'DESC' : 'ASC');
+        } else {
+            $query->orderBy('c.dateCreation', 'ASC');
+        }
+
+        return $query->getQuery()->getResult();
+    }
 }

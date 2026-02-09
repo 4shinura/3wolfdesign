@@ -2,9 +2,11 @@
 
 namespace App\Controller;
 
+use App\Entity\Commande;
 use App\Entity\Utilisateur;
 use App\Entity\Produit;
 use App\Form\ProduitFormType;
+use App\Repository\CommandeRepository;
 use App\Repository\ProduitRepository;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
@@ -22,11 +24,13 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 class AdminController extends AbstractController
 {
     #[Route('/dashboard', name: 'dashboard')]
-    public function index(UtilisateurRepository $userRepo, ProduitRepository $productRepo): Response
+    public function index(UtilisateurRepository $userRepo, ProduitRepository $productRepo, CommandeRepository $commandeRepo): Response
     {
         return $this->render('back-office/admin/dashboard.html.twig', [
             'totalUsers' => $userRepo->count([]),
-            'totalProducts' => $productRepo->count([])
+            'totalProducts' => $productRepo->count([]),
+            'totalCommandes'=> $commandeRepo->countOrders(),
+            'pendingOrders' => $commandeRepo->countPendingOrders(),
         ]);
     }
 
@@ -179,6 +183,16 @@ class AdminController extends AbstractController
         return $this->redirectToRoute('app_admin_manage_images');
     }
 
+    #[Route('/produit', name: 'manage_products')]
+    public function product(ProduitRepository $produitRepository): Response
+    {
+        // On récupère tous les produits
+        $produits = $produitRepository->findAll();
+
+        return $this->render('back-office/admin/manage_products.html.twig', [
+            'produits' => $produits,
+        ]);
+    }
 
     #[Route('/produit/nouveau', name: 'product_new')]
     public function newProduct(Request $request, EntityManagerInterface $em): Response 
@@ -190,18 +204,18 @@ class AdminController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->handleImageUpload($form, $produit);
 
-            if ($produit->getCategorie()->getId() === 2) {
-                $produit->setEstAchetable(true);
-            } else {
-                $produit->setEstAchetable(false);
-            }
-
-            $targetRoute = $produit->isEstAchetable() ? 'app_catalog' : 'app_gallery';
-
             $em->persist($produit);
             $em->flush();
 
             $this->addFlash('success', 'Ajout réussi !');
+
+            // Redirection : priorité au referer, sinon route par défaut selon le type
+            $referer = $request->headers->get('referer');
+            if ($referer) {
+                return $this->redirect($referer);
+            }
+
+            $targetRoute = $produit->isEstAchetable() ? 'app_catalog' : 'app_gallery';
             return $this->redirectToRoute($targetRoute);
         }
 
@@ -214,20 +228,24 @@ class AdminController extends AbstractController
     #[Route('/produit/modifier/{id}', name: 'product_edit')]
     public function editProduct(Produit $produit, Request $request, EntityManagerInterface $em): Response 
     {
+        $referer = $request->headers->get('referer');
+
         $form = $this->createForm(ProduitFormType::class, $produit);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->handleImageUpload($form, $produit);
-
             $em->flush(); 
 
             $this->addFlash('success', 'Mise à jour effectuée.');
 
-            if ($produit->isEstAchetable()) {
-                return $this->redirectToRoute('app_catalog_show', ['id' => $produit->getId()]);
+            // Redirection : priorité au referer, sinon route par défaut selon le type
+            if ($referer) {
+                return $this->redirect($referer);
             }
-            return $this->redirectToRoute('app_gallery_show', ['id' => $produit->getId()]);
+
+            $targetRoute = $produit->isEstAchetable() ? 'app_catalog_show' : 'app_gallery_show';
+            return $this->redirectToRoute($targetRoute, ['id' => $produit->getId()]);
         }
 
         return $this->render('back-office/admin/product_form.html.twig', [
@@ -237,8 +255,34 @@ class AdminController extends AbstractController
         ]);
     }
 
+    #[Route('/produit/supprimer/{id}', name: 'product_delete', methods: ['POST'])]
+    public function deleteProduct(Produit $produit, Request $request, EntityManagerInterface $em): Response 
+    {
+        $referer = $request->headers->get('referer');
+        $imgDir = $this->getParameter('kernel.project_dir') . '/assets/img/produits/';
+
+        if ($this->isCsrfTokenValid('delete'.$produit->getId(), $request->request->get('_token'))) {
+            // Suppression physique de l'image
+            if ($produit->getImg_path() && file_exists($imgDir . $produit->getImg_path())) {
+                unlink($imgDir . $produit->getImg_path());
+            }
+
+            $em->remove($produit);
+            $em->flush();
+            $this->addFlash('success', 'La réalisation a été supprimée.');
+        }
+
+        // Redirection : priorité au referer, sinon route par défaut selon le type
+        if ($referer) {
+            return $this->redirect($referer);
+        }
+
+        $targetRoute = $produit->isEstAchetable() ? 'app_catalog' : 'app_gallery';
+        return $this->redirectToRoute($targetRoute);
+    }
+
     /**
-     * Méthode privée pour éviter de répéter le code d'upload
+     * Méthode privée pour la gestion de l'image
      */
     private function handleImageUpload($form, Produit $produit): void
     {
@@ -253,22 +297,40 @@ class AdminController extends AbstractController
                 $imageFile->move($imgDir, $newFilename);
                 $produit->setImg_path($newFilename);
             } catch (FileException $e) {
+                dump($e);
             }
         }
     }
 
-    #[Route('/produit/supprimer/{id}', name: 'product_delete', methods: ['POST'])]
-    public function deleteProduct(Produit $produit, Request $request, EntityManagerInterface $em): Response {
-        $targetRoute = $produit->isEstAchetable() ? 'app_catalog' : 'app_gallery';
-        $imgDir = $this->getParameter('kernel.project_dir') . '/assets/img/produits/';
-        if ($this->isCsrfTokenValid('delete'.$produit->getId(), $request->request->get('_token'))) {
-            $em->remove($produit);
-            if (file_exists($imgDir . $produit->getImg_path())) {
-                unlink($imgDir . $produit->getImg_path());
-            }
-            $em->flush();
-            $this->addFlash('success', 'La réalisation a été supprimée.');
-        }
-        return $this->redirectToRoute($targetRoute);
+    #[Route('/ventes', name: 'manage_sales')]
+    public function sales(CommandeRepository $commandeRepository, Request $request): Response
+    {
+        $totalVentes = $commandeRepository->getTotalSales();
+        $totalVentesMois = $commandeRepository->getTotalSalesThisMonth();
+
+        $search = $request->query->get('search');
+        $status = $request->query->get('status'); 
+        $sortBy = $request->query->get('sortBy', 'dateCreation'); 
+        $order = $request->query->get('order', 'ASC'); 
+
+        $commandes = $commandeRepository->findAllWithDetails($search, $status, $sortBy, $order);
+
+        return $this->render('back-office/admin/manage_sales.html.twig', [
+            'commandes' => $commandes,
+            'totalVentes' => $totalVentes,
+            'totalVentesMois' => $totalVentesMois,
+            'currentSort' => $sortBy,
+            'currentOrder' => $order
+        ]); 
+    }
+
+    #[Route('/ventes/statut/{id}', name: 'update_status_sale', methods: ['POST'])]
+    public function updateStatus(Commande $commande, EntityManagerInterface $em): Response
+    {
+        $commande->setStatus('Terminé');
+        $em->flush();
+
+        $this->addFlash('success', "Commande {$commande->getReference()} marquée comme terminée.");
+        return $this->redirectToRoute('app_admin_manage_sales');
     }
 }

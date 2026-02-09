@@ -66,7 +66,7 @@
                                 <i class="fas fa-edit me-1"></i> Modifier
                             </a>
                             
-                            <form method="post" action="{{ path('app_admin_product_delete', {id: produit.id}) }}" onsubmit="return confirm('Supprimer définitivement ce proto-kit ?');">
+                            <form method="post" action="{{ path('app_admin_product_delete', {id: produit.id}) }}" onsubmit="return confirm('Supprimer définitivement ce produit ?');">
                                 <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ produit.id) }}">
                                 <button class="btn btn-outline-danger btn-sm px-4 rounded-pill">
                                     <i class="fas fa-trash me-1"></i> Supprimer
