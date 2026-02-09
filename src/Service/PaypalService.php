@@ -13,13 +13,15 @@ class PaypalService
 {
     private $client;
 
-    public function __construct(string $clientId, string $clientSecret)
+    public function __construct(string $clientId, string $clientSecret, string $paypalMode)
     {
+        $environment = ($paypalMode === 'prod') ? Environment::PRODUCTION : Environment::SANDBOX;
+
         $this->client = PaypalServerSdkClientBuilder::init()
             ->clientCredentialsAuthCredentials(
                 ClientCredentialsAuthCredentialsBuilder::init($clientId, $clientSecret)
             )
-            ->environment(Environment::SANDBOX) // À changer en PRODUCTION plus tard
+            ->environment($environment) 
             ->build();
     }
 
