@@ -1,0 +1,70 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Détail Commande #{{ commande.id }}{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+    <div class="card shadow-sm">
+        <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
+            <h2 class="mb-0">Référence de la commande : {{ commande.reference }}</h2>
+            <h6 class="mb-0">ID de la commande : #{{ commande.id }}</h6>
+            <span class="badge bg-success">{{ commande.status }}</span>
+        </div>
+        <div class="card-body">
+            {# Infos Client #}
+            <div class="row mb-4">
+                <div class="col-md-6 border-end">
+                    <h5><i class="fas fa-shipping-fast me-2"></i>Informations de Livraison</h5>
+                    <p class="mt-3">
+                        <strong>Destinataire :</strong> {{ commande.prenom }} {{ commande.nom }}<br>
+                        <strong>Adresse :</strong> {{ commande.adresse }}<br>
+                        <strong>Code Postal :</strong> {{ commande.codePostal }}<br> 
+                        <strong>Ville :</strong> {{ commande.ville }}<br>
+                        <strong>Pays :</strong> {{ commande.pays }}
+                    </p>
+                </div>
+                <div class="col-md-6 ps-md-4">
+                    <h5><i class="fas fa-user me-2"></i>Compte Client</h5>
+                    <p class="mt-3">
+                        <strong>Email du compte :</strong> {{ commande.utilisateur.email }}<br>
+                        <strong>Date de commande :</strong> {{ commande.dateCreation|date('d/m/Y H:i') }}
+                    </p>
+                </div>
+            </div>
+
+            <h5><i class="fas fa-shopping-basket me-2"></i>Produits commandés</h5>
+            <table class="table table-bordered mt-2">
+                <thead class="table-light">
+                    <tr>
+                        <th>Produit</th>
+                        <th class="text-center">Prix Unitaire</th>
+                        <th class="text-center">Quantité</th>
+                        <th class="text-end">Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for detail in commande.detailsCommande %} 
+                    <tr>
+                        <td>{{ detail.produit.nom }}</td>
+                        <td class="text-center">{{ detail.prixAchat|number_format(2, ',', ' ') }} €</td>
+                        <td class="text-center">x {{ detail.quantite }}</td>
+                        <td class="text-end">{{ (detail.prixAchat * detail.quantite)|number_format(2, ',', ' ') }} €</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th colspan="3" class="text-end">Montant Total :</th>
+                        <th class="text-end bg-light">{{ commande.prixTotal|number_format(2, ',', ' ') }} €</th>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+        <div class="card-footer">
+            <a href="{{ path('app_admin_manage_orders') }}" class="btn btn-secondary">Retour à la liste</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block partenaires %}{% endblock %}

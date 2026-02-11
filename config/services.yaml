@@ -8,7 +8,9 @@
 # https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
 parameters:
     paypal_client_id: '%env(PAYPAL_CLIENT_ID)%'
-    $paypalMode: '%env(PAYPAL_MODE)%'
+    contact_mailer_from: '%env(CONTACT_MAILER_FROM)%'
+    contact_mailer_to: '%env(CONTACT_MAILER_TO)%'
+    support_mailer_from: '%env(SUPPORT_MAILER_FROM)%'
 
 services:
     # default configuration for services in *this* file
@@ -26,6 +28,9 @@ services:
             $clientId: '%env(PAYPAL_CLIENT_ID)%'
             $clientSecret: '%env(PAYPAL_SECRET_KEY)%'
             $paypalMode: '%env(PAYPAL_MODE)%'
-            
+    
+    App\Controller\LegalController:
+        bind:
+            $contactFormLimiter: '@limiter.contact_form'
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones

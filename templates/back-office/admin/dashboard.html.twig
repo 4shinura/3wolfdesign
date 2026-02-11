@@ -46,7 +46,7 @@
                 <div class="card-body text-center">
                     <h5 class="card-title">Commandes</h5>
                     <p class="display-4">{{ totalCommandes }}</p>
-                    <a href="{{ path('app_admin_manage_sales') }}" class="btn btn-outline-light btn-sm">Voir toutes les commandes</a>
+                    <a href="{{ path('app_admin_manage_orders') }}" class="btn btn-outline-light btn-sm">Voir toutes les commandes</a>
                 </div>
             </div>
         </div>
@@ -58,7 +58,7 @@
                 <div class="card-body text-center">
                     <h5 class="card-title">Commandes à traiter</h6>
                     <p class="display-4">{{ pendingOrders }}</p>
-                    <a href="{{ path('app_admin_manage_sales', { 'status': 'Payée', 'sortBy': 'dateCreation', 'order': 'ASC' }) }}" class="btn btn-outline-light btn-sm">Voir les commandes en attente</a>
+                    <a href="{{ path('app_admin_manage_orders', { 'status': 'Payée', 'sortBy': 'dateCreation', 'order': 'ASC' }) }}" class="btn btn-outline-light btn-sm">Voir les commandes en attente</a>
                 </div>
             </div>
         </div>

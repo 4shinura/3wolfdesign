@@ -226,9 +226,17 @@ class AdminController extends AbstractController
     }
 
     #[Route('/produit/modifier/{id}', name: 'product_edit')]
-    public function editProduct(Produit $produit, Request $request, EntityManagerInterface $em): Response 
+    public function editProduct(?Produit $produit, Request $request, EntityManagerInterface $em): Response 
     {
         $referer = $request->headers->get('referer');
+
+        if (!$produit) {
+            $this->addFlash('warning', 'Désolé, ce produit n\'existe pas ou a été supprimée.');
+            if ($referer) {
+                return $this->redirect($referer);
+            }
+            return $this->redirectToRoute('app_catalog');
+        }
 
         $form = $this->createForm(ProduitFormType::class, $produit);
         $form->handleRequest($request);
@@ -256,10 +264,18 @@ class AdminController extends AbstractController
     }
 
     #[Route('/produit/supprimer/{id}', name: 'product_delete', methods: ['POST'])]
-    public function deleteProduct(Produit $produit, Request $request, EntityManagerInterface $em): Response 
+    public function deleteProduct(?Produit $produit, Request $request, EntityManagerInterface $em): Response 
     {
         $referer = $request->headers->get('referer');
         $imgDir = $this->getParameter('kernel.project_dir') . '/assets/img/produits/';
+
+        if (!$produit) {
+            $this->addFlash('warning', 'Désolé, ce produit n\'existe pas ou a été supprimée.');
+            if ($referer) {
+                return $this->redirect($referer);
+            }
+            return $this->redirectToRoute('app_catalog');
+        }
 
         if ($this->isCsrfTokenValid('delete'.$produit->getId(), $request->request->get('_token'))) {
             // Suppression physique de l'image
@@ -302,8 +318,8 @@ class AdminController extends AbstractController
         }
     }
 
-    #[Route('/ventes', name: 'manage_sales')]
-    public function sales(CommandeRepository $commandeRepository, Request $request): Response
+    #[Route('/commandes', name: 'manage_orders')]
+    public function orders(CommandeRepository $commandeRepository, Request $request): Response
     {
         $totalVentes = $commandeRepository->getTotalSales();
         $totalVentesMois = $commandeRepository->getTotalSalesThisMonth();
@@ -315,7 +331,7 @@ class AdminController extends AbstractController
 
         $commandes = $commandeRepository->findAllWithDetails($search, $status, $sortBy, $order);
 
-        return $this->render('back-office/admin/manage_sales.html.twig', [
+        return $this->render('back-office/admin/manage_orders.html.twig', [
             'commandes' => $commandes,
             'totalVentes' => $totalVentes,
             'totalVentesMois' => $totalVentesMois,
@@ -324,13 +340,31 @@ class AdminController extends AbstractController
         ]); 
     }
 
-    #[Route('/ventes/statut/{id}', name: 'update_status_sale', methods: ['POST'])]
-    public function updateStatus(Commande $commande, EntityManagerInterface $em): Response
+    #[Route('/commande/{id}', name: 'show_order')]
+    public function show(?Commande $commande): Response
+    {   
+        if (!$commande) {
+            $this->addFlash('warning', 'Désolé, cette commande n\'existe pas ou a été supprimée.');
+            return $this->redirectToRoute('app_admin_manage_orders');
+        }
+
+        return $this->render('back-office/admin/show_order.html.twig', [
+            'commande' => $commande,
+        ]);
+    }
+
+    #[Route('/commande/statut/{id}', name: 'update_status_order', methods: ['POST'])]
+    public function updateStatus(?Commande $commande, EntityManagerInterface $em): Response
     {
+        if (!$commande) {
+            $this->addFlash('warning', 'Désolé, cette commande n\'existe pas ou a été supprimée.');
+            return $this->redirectToRoute('app_admin_manage_orders');
+        }
+
         $commande->setStatus('Terminé');
         $em->flush();
 
         $this->addFlash('success', "Commande {$commande->getReference()} marquée comme terminée.");
-        return $this->redirectToRoute('app_admin_manage_sales');
+        return $this->redirectToRoute('app_admin_manage_orders');
     }
 }

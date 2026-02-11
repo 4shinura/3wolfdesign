@@ -43,14 +43,35 @@ class PaymentController extends AbstractController
             if (isset($result['status']) && $result['status'] === 'COMPLETED') {
 
                 // 1. Création de la Commande,
-
-                // Montant exact capturé par PayPal, sinon montant par le panier
-                $amountPaid = $result['purchase_units'][0]['payments']['captures'][0]['amount']['value'] ?? $cartService->getTotalPrice(); 
+                $amountPaid = $result['purchase_units'][0]['payments']['captures'][0]['amount']['value'] ?? $cartService->getTotalPrice(); // Montant exact capturé par PayPal, sinon montant par le panier
+                $purchaseUnit = $result['purchase_units'][0];
+                $shipping = $purchaseUnit['shipping'];
+                $address = $shipping['address'];
+                $fullName = $shipping['name']['full_name'];
 
                 $commande = new Commande();
                 $commande->setReference($result['id']); 
                 $commande->setPrixTotal((float)$amountPaid);
                 $commande->setStatus('Payée');
+
+                // Logique pour séparer Nom Prénom
+                $nameParts = explode(' ', $fullName);
+                $prenom = $nameParts[0];
+                $nom = count($nameParts) > 1 ? implode(' ', array_slice($nameParts, 1)) : 'Non renseigné';
+
+                $commande->setPrenom($prenom);
+                $commande->setNom($nom);
+
+                // Adresse (Ligne 1 + Ligne 2 si elle existe)
+                $rue = $address['address_line_1'];
+                if (isset($address['address_line_2'])) {
+                    $rue .= ' ' . $address['address_line_2'];
+                }
+                $commande->setAdresse($rue);
+                
+                $commande->setVille($address['admin_area_2']);
+                $commande->setCodePostal($address['postal_code']);
+                $commande->setPays($address['country_code']); // Format FR, US, etc.
                 
                 // On récupère l'utilisateur connecté
                 $user = $this->getUser();

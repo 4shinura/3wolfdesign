@@ -15,6 +15,18 @@ class ChangePasswordFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+        // On ajoute le champ 'oldPassword' que si ce n'est pas un mot de passe oublié (demande de reinitialisation)
+        if (!$options['is_forgotten']) {
+            $builder->add('oldPassword', PasswordType::class, [
+                'label' => 'Mot de passe actuel',
+                'mapped' => false,
+                'constraints' => [
+                    new NotBlank(message: 'Veuillez saisir votre mot de passe actuel'),
+                ],
+                'attr' => ['class' => 'form-control']
+            ]);
+        }
+
         $builder
             ->add('plainPassword', RepeatedType::class, [
                 'type' => PasswordType::class,
@@ -56,10 +68,15 @@ class ChangePasswordFormType extends AbstractType
 
     public function configureOptions(OptionsResolver $resolver): void
     {
-        $resolver->setDefaults([            
+        $resolver->setDefaults([
+            // On définit la valeur par défaut à false
+            'is_forgotten' => false,
             'attr' => [
                 'class' => 'form-container'
             ]
         ]);
+
+        // On précise que cette option doit être un booléen
+        $resolver->setAllowedTypes('is_forgotten', 'bool');
     }
 }

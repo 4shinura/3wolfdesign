@@ -31,8 +31,7 @@
                         {% for commande in commandes %}
                             <tr>
                                 <td class="ps-4">
-                                    <span class="fw-bold">#{{ commande.id }}</span>
-                                    <div class="small text-muted d-block d-md-none">{{ commande.reference }}</div>
+                                    <span class="fw-bold">{{ commande.reference }}</span>
                                 </td>
                                 <td class="text-muted small">
                                     {{ commande.dateCreation|date('d/m/Y') }}

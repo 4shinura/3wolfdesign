@@ -21,8 +21,12 @@ final class GalleryController extends AbstractController
     }
 
     #[Route('/galerie/{id}', name: 'app_gallery_show')]
-    public function show(Produit $produit): Response
+    public function show(?Produit $produit): Response
     {
+        if (!$produit) {
+            $this->addFlash('warning', 'Désolé, ce produit n\'existe pas ou a été supprimée.');
+            return $this->redirectToRoute('app_gallery');
+        }
         return $this->render('gallery/show.html.twig', [
             'produit' => $produit,
         ]);

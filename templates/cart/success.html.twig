@@ -1,11 +1,11 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Confirmation de commande - #{{ commande.id }}{% endblock %}
+{% block title %}Merci pour votre confiance - #{{ commande.id }}{% endblock %}
 
 {% block body %}
 <div class="container my-5 py-5">
     <div class="row justify-content-center">
-        <div class="col-lg-8">
+        <div class="col-lg-9">
             <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
                 <div class="card-body p-4 p-md-5">
                     
@@ -16,41 +16,57 @@
                                 <path d="M15.354 3.354a.5.5 0 0 0-.708-.708L8 9.293 5.354 6.646a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l7-7z"/>
                             </svg>
                         </div>
-                        <h1 class="h3 fw-light text-uppercase tracking-wider">Commande Confirmée</h1>
-                        <p class="text-muted small">Réf. {{ commande.reference }}</p>
+                        <h1 class="h3 fw-light text-uppercase tracking-wider">Merci {{ commande.prenom }} !</h1>
+                        <p class="text-muted">Votre commande est confirmée et en cours de préparation.</p>
+                        <div class="badge bg-light text-dark border px-3 py-2 rounded-pill small mt-2">
+                            Réf. : {{ commande.reference }}
+                        </div>
                     </div>
 
                     <div class="row g-4 mb-5">
-                        <div class="col-md-6 border-end">
-                            <h2 class="h6 fw-bold text-uppercase mb-3">Merci</h2>
-                            <p class="text-muted small">
-                                Votre commande est en cours de préparation. Un e-mail contenant votre facture et le suivi d'expédition vient de vous être envoyé.
-                            </p>
+                        <div class="col-md-7 border-end pe-md-4">
+                            <div class="mt-4 p-3 bg-light rounded-3">
+                                <h3 class="h6 fw-bold text-uppercase mb-2 small"><i class="fas fa-truck me-2"></i>Adresse de livraison</h3>
+                                <address class="small mb-0 text-muted">
+                                    {{ commande.prenom }} {{ commande.nom }}<br>
+                                    {{ commande.adresse }}<br>
+                                    {{ commande.codePostal }} {{ commande.ville }}<br>
+                                    {{ commande.pays }}
+                                </address>
+                            </div>
                         </div>
-                        <div class="col-md-6 ps-md-4">
+
+                        <div class="col-md-5 ps-md-4">
                             <h2 class="h6 fw-bold text-uppercase mb-3">Résumé</h2>
                             <ul class="list-unstyled small mb-0">
-                                <li class="d-flex justify-content-between mb-2">
-                                    <span class="text-muted">Date :</span>
+                                <li class="d-flex justify-content-between mb-2 pb-2 border-bottom border-light">
+                                    <span class="text-muted">Date de commande :</span>
                                     <span>{{ commande.dateCreation|date('d/m/Y') }}</span>
                                 </li>
-                                <li class="d-flex justify-content-between">
-                                    <span class="text-muted">Total :</span>
-                                    <span class="fw-bold text-primary">{{ commande.prixTotal|number_format(2, ',', ' ') }} €</span>
+                                <li class="d-flex justify-content-between pt-2">
+                                    <span class="fw-bold text-uppercase">Total payé :</span>
+                                    <span class="fw-bold text-primary h5 mb-0">{{ commande.prixTotal|number_format(2, ',', ' ') }} €</span>
                                 </li>
                             </ul>
                         </div>
                     </div>
 
-                    <div class="bg-light p-4 rounded-3 mb-5">
-                        <h2 class="h6 fw-bold text-uppercase mb-3">Articles commandés</h2>
+                    <div class="border rounded-3 overflow-hidden mb-5">
+                        <div class="bg-light px-4 py-3 border-bottom">
+                            <h2 class="h6 fw-bold text-uppercase mb-0 small">Détails de vos articles</h2>
+                        </div>
                         <div class="table-responsive">
-                            <table class="table table-borderless table-sm mb-0">
+                            <table class="table table-borderless mb-0">
                                 <tbody class="small">
                                     {% for detail in commande.detailsCommande %}
-                                        <tr>
-                                            <td class="py-2">{{ detail.produit.nom }} <span class="text-muted">x{{ detail.quantite }}</span></td>
-                                            <td class="py-2 text-end">{{ (detail.prixAchat * detail.quantite)|number_format(2, ',', ' ') }} €</td>
+                                        <tr class="border-bottom border-light">
+                                            <td class="py-3 px-4">
+                                                <div class="fw-bold">{{ detail.produit.nom }}</div>
+                                                <div class="text-muted small">Quantité : {{ detail.quantite }}</div>
+                                            </td>
+                                            <td class="py-3 px-4 text-end align-middle">
+                                                {{ (detail.prixAchat * detail.quantite)|number_format(2, ',', ' ') }} €
+                                            </td>
                                         </tr>
                                     {% endfor %}
                                 </tbody>
@@ -59,12 +75,16 @@
                     </div>
 
                     <div class="text-center">
-                        <a href="{{ path('app_catalog') }}" class="btn btn-dark px-5 py-2 rounded-0 text-uppercase tracking-tighter shadow-sm">
-                            Continuer la navigation
+                        <a href="{{ path('app_catalog') }}" class="btn btn-dark px-5 py-3 rounded-0 text-uppercase tracking-tighter shadow-sm">
+                            Continuer mon shopping
                         </a>
                     </div>
 
                 </div>
+            </div>
+            
+            <div class="text-center mt-4">
+                <p class="small text-muted">Besoin d'aide ? <a href="{{ path('app_legal_contact') }}" class="text-decoration-underline text-dark">Contactez notre support</a></p>
             </div>
         </div>
     </div>
@@ -73,11 +93,12 @@
 <style>
     body { background-color: #f8f9fa; }
     .tracking-wider { letter-spacing: 0.15em; }
-    .tracking-tighter { letter-spacing: 0.05em; font-size: 0.85rem; }
+    .tracking-tighter { letter-spacing: 0.1em; font-size: 0.8rem; font-weight: 700; }
     .card { border: none !important; }
-    .text-primary { color: #2c3e50 !important; } /* Un bleu/gris sombre fait plus pro que le bleu bootstrap */
+    .text-primary { color: #1a1a1a !important; }
     .btn-dark { background-color: #1a1a1a; border: none; transition: all 0.3s; }
     .btn-dark:hover { background-color: #333; transform: translateY(-1px); }
+    address { line-height: 1.6; }
 </style>
 {% endblock %}
 
