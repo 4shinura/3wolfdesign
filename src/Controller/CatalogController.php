@@ -21,8 +21,12 @@ final class CatalogController extends AbstractController
     }
 
     #[Route('/catalogue/{id}', name: 'app_catalog_show')]
-    public function show(Produit $produit): Response
+    public function show(?Produit $produit): Response
     {
+        if (!$produit) {
+            $this->addFlash('warning', 'Désolé, ce produit n\'existe pas ou a été supprimée.');
+            return $this->redirectToRoute('app_catalog');
+        }
         return $this->render('catalog/show.html.twig', [
             'produit' => $produit,
         ]);

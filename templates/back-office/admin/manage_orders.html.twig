@@ -104,13 +104,13 @@
                             <td class="text-end pe-4">
                                 <div class="d-flex justify-content-end gap-2">
                                     {% if commande.status != 'Terminé' %}
-                                        <form method="post" action="{{ path('app_admin_update_status_sale', {id: commande.id}) }}" onsubmit="return confirm('Marquer cette commande comme terminée ?');">
+                                        <form method="post" action="{{ path('app_admin_update_status_order', {id: commande.id}) }}" onsubmit="return confirm('Marquer cette commande comme terminée ?');">
                                             <button class="btn btn-sm btn-success rounded-pill px-3 shadow-sm">
                                                 Terminer
                                             </button>
                                         </form>
                                     {% endif %}
-                                    <a href="{{ path('app_cart_success', {id: commande.id}) }}" class="btn btn-sm btn-light border rounded-circle" title="Voir le détail">
+                                    <a href="{{ path('app_admin_show_order', {id: commande.id}) }}" class="btn btn-sm btn-light border rounded-circle" title="Voir le détail">
                                         <i class="fas fa-eye fa-xs"></i>
                                     </a>
                                 </div>
@@ -123,7 +123,7 @@
                                     <i class="fas fa-box-open fa-3x mb-3 opacity-25"></i><br>
                                     Aucune commande ne correspond à vos critères.
                                 </div>
-                                <a href="{{ path('app_admin_manage_sales') }}" class="btn btn-link btn-sm mt-2 text-decoration-none">Réinitialiser les filtres</a>
+                                <a href="{{ path('app_admin_manage_orders') }}" class="btn btn-link btn-sm mt-2 text-decoration-none">Réinitialiser les filtres</a>
                             </td>
                         </tr>
                     {% endfor %}
