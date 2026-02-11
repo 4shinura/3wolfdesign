@@ -1,0 +1,6 @@
+framework:
+    rate_limiter:
+        contact_form:
+            policy: 'fixed_window'
+            limit: 1              # Nombre de messages autorisés
+            interval: '5 minutes' # Sur cette période

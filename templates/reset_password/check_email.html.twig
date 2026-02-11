@@ -1,11 +1,45 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Password Reset Email Sent{% endblock %}
+{% block title %}Email de réinitialisation envoyé{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('styles/security.css') }}">
+    <style>
+        .info-text {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+        .timer-highlight {
+            color: #1a1a1a;
+            font-weight: 600;
+        }
+    </style>
+{% endblock %}
 
 {% block body %}
-    <p>
-        If an account matching your email exists, then an email was just sent that contains a link that you can use to reset your password.
-        This link will expire in {{ resetToken.expirationMessageKey|trans(resetToken.expirationMessageData, 'ResetPasswordBundle') }}.
-    </p>
-    <p>If you don't receive an email please check your spam folder or <a href="{{ path('app_forgot_password_request') }}">try again</a>.</p>
+    <div class="form-container">
+        <h1 class="page-title">Vérifiez votre boîte mail</h1>
+
+        <div class="info-text">
+            <p>
+                Si un compte correspond à votre adresse email, un message vient de vous être envoyé avec un lien pour réinitialiser votre mot de passe.
+            </p>
+            <p>
+                Ce lien expirera dans <span class="timer-highlight">{{ resetToken.expirationMessageKey|trans(resetToken.expirationMessageData, 'ResetPasswordBundle') }}</span>.
+            </p>
+        </div>
+
+        <div class="alert alert-info" style="font-size: 0.9em; background-color: #f8f9fa; border: 1px solid #e9ecef; color: #666; padding: 15px;">
+            Si vous ne recevez rien, vérifiez vos <strong>courriers indésirables (spams)</strong> ou 
+            <a href="{{ path('app_forgot_password_request') }}" style="color: #1a1a1a; text-decoration: underline;">réessayez ici</a>.
+        </div>
+
+        <div class="mt-4 text-center">
+            <a href="{{ path('app_login') }}" class="btn btn-primary w-100">Retour à la connexion</a>
+        </div>
+    </div>
 {% endblock %}
+
+{% block partenaires %}{% endblock %}

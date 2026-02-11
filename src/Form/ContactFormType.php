@@ -23,6 +23,19 @@ class ContactFormType extends AbstractType
             ->add('email', EmailType::class, [
                 'attr' => ['placeholder' => 'Adresse Mail', 'class' => 'form-input full-width']
             ])
+
+            # HoneyPot Field (Non visible, nécessaire pour la protection de spam)
+            ->add('telephone_pro', TextType::class, [
+                'mapped' => false,
+                'required' => false,
+                'label' => false,
+                'attr' => [
+                    'style' => 'display:none !important;',
+                    'tabindex' => '-1',
+                    'autocomplete' => 'off'
+                ]
+            ])
+
             ->add('message', TextareaType::class, [
                 'attr' => ['placeholder' => 'Message', 'class' => 'form-textarea']
             ])

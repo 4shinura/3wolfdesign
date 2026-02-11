@@ -51,7 +51,6 @@ class AccountController extends AbstractController
         UserPasswordHasherInterface $userPasswordHasher, 
         EntityManagerInterface $entityManager
     ): Response {
-
         /** @var Utilisateur $user */
         $user = $this->getUser();
 
@@ -59,17 +58,21 @@ class AccountController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $oldPassword = $form->get('oldPassword')->getData();
+
+            if (!$userPasswordHasher->isPasswordValid($user, $oldPassword)) {
+                $this->addFlash('danger', 'Le mot de passe actuel est incorrect.');
+                return $this->render('back-office/user/change_password.html.twig', [
+                    'passwordForm' => $form->createView(),
+                ]);
+            }
 
             $newPassword = $form->get('plainPassword')->getData();
-
-            $user->setPassword(
-                $userPasswordHasher->hashPassword($user, $newPassword)
-            );
+            $user->setPassword($userPasswordHasher->hashPassword($user, $newPassword));
 
             $entityManager->flush();
 
             $this->addFlash('success', 'Votre mot de passe a bien été mis à jour.');
-
             return $this->redirectToRoute('app_user_account');
         }
 
