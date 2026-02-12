@@ -1,4 +1,4 @@
-# 3wolfdesign - Plateforme d'Aéromodèles & Impression 3D
+# 3wolfdesign - Aéromodèles & Impression 3D
 
 ![Symfony](https://img.shields.io/badge/Symfony-6.4-black?style=for-the-badge&logo=symfony)
 ![PHP](https://img.shields.io/badge/PHP-8.2-777BB4?style=for-the-badge&logo=php)
