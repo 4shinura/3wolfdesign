@@ -34,3 +34,7 @@ Le site a été développé pour répondre à plusieurs besoins :
 * **Paiement** : Intégration de l'API PayPal Checkout
 * **Performance** : Pagination avancée via [KnpPaginator](https://github.com/KnpLabs/KnpPaginatorBundle) pour les listes volumineuses (utilisateurs, produits, commandes).
 * **Design & Ergonomie** : Intégration d'une charte graphique personnalisée sous Twig avec une préoccupation sur le Responsive Design.
+* **Conformité RGPD** : 
+    * Mise en œuvre d'une politique de protection des données personnelles.
+    * Information du consentement utilisateur (CGU) pour l'usages des cookies techniques 'fonctionnels'.
+    * Sécurisation des données clients (hachage des mots de passe, protection des transactions par PayPal).
