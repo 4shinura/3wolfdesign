@@ -14,7 +14,7 @@
 
     <div class="legal-content">
         <div class="legal-header">
-            <p><strong>Date de mise à jour :</strong> 20/01/2026</p>
+            <p><strong>Date de mise à jour :</strong> 12/02/2026</p>
             <p><strong>Numéro SIREN :</strong> 97967634300010.</p>
         </div>
 
@@ -53,15 +53,23 @@
             </p>
         </section>
 
-        {# <section class="legal-section" id="cookie">
-            <h2>X. Utilisation des Cookies</h2>
-            <p>Le site peut utiliser des cookies pour améliorer l'expérience utilisateur et réaliser des statistiques de visite. Vous pouvez configurer votre navigateur pour refuser ces cookies.</p>
-        </section> #}
+        <section class="legal-section" id="cookies">
+            <h2>5. Utilisation des Cookies</h2>
+            <p>3wolfdesign utilise uniquement des cookies strictement nécessaires au fonctionnement du site :</p>
+            <ul>
+                <li><strong>Cookies de session :</strong> permettent de maintenir la connexion à votre compte client.</li>
+                <li><strong>Cookies de panier :</strong> permettent de mémoriser vos articles jusqu'au paiement.</li>
+                <li><strong>Cookies de sécurité :</strong> protègent le site contre les injections et attaques malveillantes (jetons CSRF).</li>
+            </ul>
+            <p>Conformément aux recommandations de la CNIL, ces cookies sont exemptés de recueil de consentement car ils sont indispensables à la navigation. Aucun cookie de suivi publicitaire ou de statistiques tiers n'est utilisé.</p>
+        </section>
 
         <section class="legal-section" id="litige">
-            <h2>5. Litiges</h2>
+            <h2>6. Litiges</h2>
             <p>Les présentes mentions sont régies par le droit français. En cas de litige, et après tentative de médiation, les tribunaux français seront seuls compétents.</p>
         </section>
     </div>
 </div>
 {% endblock %}
+
+{% block partenaires %}{% endblock %}
