@@ -11,6 +11,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
 use App\Entity\Utilisateur;
+use App\Repository\CommandeRepository;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[Route('/user', name: 'app_user_')]
@@ -29,19 +31,19 @@ class AccountController extends AbstractController
     }
 
     #[Route('/mon-compte/mes-commandes', name: 'orders')]
-    public function orders(EntityManagerInterface $em): Response
+    public function orders(Request $request, CommandeRepository $commandeRepository, PaginatorInterface $paginator): Response
     {
         /** @var Utilisateur $user */
         $user = $this->getUser();
 
-        // On récupère ses commandes triées par date
-        $commandes = $em->getRepository(Commande::class)->findBy(
-            ['utilisateur' => $user],
-            ['dateCreation' => 'DESC']
+        $pagination = $paginator->paginate(
+            $commandeRepository->getPaginationUserOrdersQuery($user),
+            $request->query->getInt('page', 1),
+            15
         );
 
         return $this->render('back-office/user/orders.html.twig', [
-            'commandes' => $commandes,
+            'commandes' => $pagination,
         ]);
     }
 

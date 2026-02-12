@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Utilisateur;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -33,14 +34,30 @@ class UtilisateurRepository extends ServiceEntityRepository implements PasswordU
         $this->getEntityManager()->flush();
     }
 
-    public function findByEmailPart(string $search): array
+    /**
+     * Retourne la requête (pas le résultat) pour la pagination
+     * * @param string|null $search Le terme recherché (email ou #ID)
+     * @return Query
+     */
+    public function getPaginationQuery(?string $search): Query
     {
-        return $this->createQueryBuilder('u')
-            ->andWhere('u.email LIKE :val')
-            ->setParameter('val', '%' . $search . '%')
-            ->orderBy('u.id', 'ASC')
-            ->getQuery()
-            ->getResult();
+        $qb = $this->createQueryBuilder('u')
+            ->orderBy('u.id', 'DESC');
+
+        if ($search) {
+            // Si la recherche commence par #, on cherche par ID précis
+            if (str_starts_with($search, '#')) {
+                $id = substr($search, 1);
+                $qb->andWhere('u.id = :id')
+                   ->setParameter('id', $id);
+            } else {
+                // Sinon, on cherche une correspondance partielle dans l'email
+                $qb->andWhere('u.email LIKE :search')
+                   ->setParameter('search', '%' . $search . '%');
+            }
+        }
+
+        return $qb->getQuery();
     }
 
     //    /**

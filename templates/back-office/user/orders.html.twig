@@ -6,7 +6,7 @@
 <div class="container my-5">
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h1 class="h3 fw-light text-uppercase tracking-wider">Mon Historique d'Achats</h1>
-        <span class="badge bg-light text-dark border fw-normal">{{ commandes|length }} commande(s)</span>
+        <span class="badge bg-light text-dark border fw-normal">{{ commandes.getTotalItemCount }} commandes</span>
     </div>
 
     {% if commandes is empty %}
@@ -15,10 +15,10 @@
             <a href="{{ path('app_catalog') }}" class="btn btn-dark rounded-0 px-4">Découvrir nos produits</a>
         </div>
     {% else %}
-        <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
+        <div class="card border-0 shadow-sm rounded-4 overflow-hidden mb-4">
             <div class="table-responsive">
                 <table class="table table-hover align-middle mb-0">
-                    <thead class="bg-light">
+                    <thead class="table-secondary">
                         <tr class="small text-uppercase text-muted">
                             <th class="ps-4 py-3">Commande</th>
                             <th class="py-3">Date</th>
@@ -61,14 +61,20 @@
                 </table>
             </div>
         </div>
+
+        <div class="d-flex justify-content-center mt-4">
+            {{ knp_pagination_render(commandes) }}
+        </div>
     {% endif %}
 </div>
 
 <style>
     .tracking-wider { letter-spacing: 0.1em; }
     .table thead th { font-weight: 600; font-size: 0.75rem; letter-spacing: 0.05em; }
-    .bg-success-subtle { background-color: #e1f5fe !important; } /* Bleu très clair pour un look pro */
-    .btn-outline-dark { font-size: 0.75rem; text-uppercase; letter-spacing: 0.05em; }
+    .bg-success-subtle { background-color: #e1f5fe !important; }
+    .btn-outline-dark { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; }
+    /* Style pour les boutons de pagination KNP */
+    .pagination { margin-bottom: 0; }
 </style>
 {% endblock %}
 
