@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Commande;
+use App\Entity\Utilisateur;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -14,6 +15,45 @@ class CommandeRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Commande::class);
+    }
+
+    public function getPaginationQuery(?string $search, ?string $status, string $sortBy, string $order)
+    {
+        $qb = $this->createQueryBuilder('c')
+            ->leftJoin('c.utilisateur', 'u')
+            ->leftJoin('c.details_commande', 'd')
+            ->leftJoin('d.produit', 'p')
+            ->addSelect('u', 'd', 'p');
+
+        // Filtre Recherche
+        if ($search) {
+            $qb->andWhere('c.reference LIKE :search OR c.nom LIKE :search OR c.prenom LIKE :search OR u.email LIKE :search')
+            ->setParameter('search', '%' . $search . '%');
+        }
+
+        // Filtre Statut
+        if ($status && $status !== 'tous') {
+            $qb->andWhere('c.status = :status')
+            ->setParameter('status', $status);
+        }
+
+        // Gestion du Tri (Sécurisation des colonnes)
+        $validSorts = ['dateCreation', 'status', 'prixTotal'];
+        $sortBy = in_array($sortBy, $validSorts) ? 'c.' . $sortBy : 'c.dateCreation';
+        $order = strtoupper($order) === 'ASC' ? 'ASC' : 'DESC';
+
+        $qb->orderBy($sortBy, $order);
+
+        return $qb->getQuery();
+    }
+
+    public function getPaginationUserOrdersQuery(Utilisateur $user)
+    {
+        return $this->createQueryBuilder('c')
+            ->andWhere('c.utilisateur = :user')
+            ->setParameter('user', $user)
+            ->orderBy('c.dateCreation', 'DESC')
+            ->getQuery();
     }
 
     public function countOrders(): int

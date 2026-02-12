@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use App\Repository\UtilisateurRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
@@ -35,25 +36,18 @@ class AdminController extends AbstractController
     }
 
     #[Route('/utilisateurs', name: 'manage_users')]
-    public function usersList(Request $request, UtilisateurRepository $repository): Response
+    public function usersList(Request $request, UtilisateurRepository $repository, PaginatorInterface $paginator): Response
     {
         $search = $request->query->get('q', '');
-        $users = [];
 
-        if ($search) {
-            if (str_starts_with($search, '#')) {
-                $id = substr($search, 1);
-                $user = $repository->find($id);
-                $users = $user ? [$user] : [];
-            } else {
-                $users = $repository->findByEmailPart($search);
-            }
-        } else {
-            $users = $repository->findAll();
-        }
+        $pagination = $paginator->paginate(
+            $repository->getPaginationQuery($search), 
+            $request->query->getInt('page', 1), 
+            15
+        );
 
         return $this->render('back-office/admin/manage_users.html.twig', [
-            'users' => $users,
+            'users' => $pagination,
             'searchTerm' => $search
         ]);
     }
@@ -184,13 +178,19 @@ class AdminController extends AbstractController
     }
 
     #[Route('/produit', name: 'manage_products')]
-    public function product(ProduitRepository $produitRepository): Response
+    public function product(Request $request, ProduitRepository $produitRepository, PaginatorInterface $paginator): Response
     {
-        // On récupère tous les produits
-        $produits = $produitRepository->findAll();
+        $search = $request->query->get('q'); 
+        
+        $pagination = $paginator->paginate(
+            $produitRepository->getPaginationQuery($search),
+            $request->query->getInt('page', 1),
+            10
+        );
 
         return $this->render('back-office/admin/manage_products.html.twig', [
-            'produits' => $produits,
+            'produits' => $pagination,
+            'searchTerm' => $search
         ]);
     }
 
@@ -319,7 +319,7 @@ class AdminController extends AbstractController
     }
 
     #[Route('/commandes', name: 'manage_orders')]
-    public function orders(CommandeRepository $commandeRepository, Request $request): Response
+    public function orders(CommandeRepository $commandeRepository, Request $request, PaginatorInterface $paginator): Response
     {
         $totalVentes = $commandeRepository->getTotalSales();
         $totalVentesMois = $commandeRepository->getTotalSalesThisMonth();
@@ -327,16 +327,21 @@ class AdminController extends AbstractController
         $search = $request->query->get('search');
         $status = $request->query->get('status'); 
         $sortBy = $request->query->get('sortBy', 'dateCreation'); 
-        $order = $request->query->get('order', 'ASC'); 
+        $order = $request->query->get('order', 'DESC'); // Défaut DESC pour voir les dernières commandes
 
-        $commandes = $commandeRepository->findAllWithDetails($search, $status, $sortBy, $order);
+        $pagination = $paginator->paginate(
+            $commandeRepository->getPaginationQuery($search, $status, $sortBy, $order),
+            $request->query->getInt('page', 1),
+            15
+        );
 
         return $this->render('back-office/admin/manage_orders.html.twig', [
-            'commandes' => $commandes,
+            'commandes' => $pagination,
             'totalVentes' => $totalVentes,
             'totalVentesMois' => $totalVentesMois,
             'currentSort' => $sortBy,
-            'currentOrder' => $order
+            'currentOrder' => $order,
+            'searchTerm' => $search
         ]); 
     }
 

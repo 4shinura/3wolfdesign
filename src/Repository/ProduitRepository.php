@@ -16,6 +16,19 @@ class ProduitRepository extends ServiceEntityRepository
         parent::__construct($registry, Produit::class);
     }
 
+    public function getPaginationQuery(?string $search)
+    {
+        $qb = $this->createQueryBuilder('p')
+            ->orderBy('p.id', 'DESC');
+
+        if ($search) {
+            $qb->andWhere('p.nom LIKE :search OR p.description LIKE :search')
+            ->setParameter('search', '%' . $search . '%');
+        }
+
+        return $qb->getQuery();
+    }
+
     //    /**
     //     * @return Produit[] Returns an array of Produit objects
     //     */
