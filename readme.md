@@ -1,7 +1,7 @@
 # 3wolfdesign - Aéromodèles & Impression 3D
 
-![Symfony](https://img.shields.io/badge/Symfony-6.4-black?style=for-the-badge&logo=symfony)
-![PHP](https://img.shields.io/badge/PHP-8.2-777BB4?style=for-the-badge&logo=php)
+![Symfony](https://img.shields.io/badge/Symfony-8.0.3-black?style=for-the-badge&logo=symfony)
+![PHP](https://img.shields.io/badge/PHP-8.4-777BB4?style=for-the-badge&logo=php)
 ![MariaDB](https://img.shields.io/badge/MariaDB-003545?style=for-the-badge&logo=mariadb&logoColor=white)
 
 ## 🎯 Objectifs du Projet
